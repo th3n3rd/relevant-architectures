@@ -13,9 +13,9 @@ class ImportTransactionsTests extends Specification {
         def anyClientId = 123
         def anyAccountId = 789
         transactionsGateway.fetchAll(anyClientId, anyAccountId) >> [
-            new Transaction(anyClientId, new BigDecimal("5.00"), "EUR"),
-            new Transaction(anyClientId, new BigDecimal("75.00"), "GBP"),
-            new Transaction(anyClientId, new BigDecimal("150.00"), "GBP"),
+            new Transaction(anyClientId, anyAccountId, new BigDecimal("5.00"), "EUR"),
+            new Transaction(anyClientId, anyAccountId, new BigDecimal("75.00"), "GBP"),
+            new Transaction(anyClientId, anyAccountId, new BigDecimal("150.00"), "GBP"),
         ]
 
         when:
@@ -23,9 +23,9 @@ class ImportTransactionsTests extends Specification {
 
         then:
         transactions.findAll() == [
-            new Transaction(anyClientId, new BigDecimal("5.00"), "EUR"),
-            new Transaction(anyClientId, new BigDecimal("75.00"), "GBP"),
-            new Transaction(anyClientId, new BigDecimal("150.00"), "GBP"),
+            new Transaction(anyClientId, anyAccountId, new BigDecimal("5.00"), "EUR"),
+            new Transaction(anyClientId, anyAccountId, new BigDecimal("75.00"), "GBP"),
+            new Transaction(anyClientId, anyAccountId, new BigDecimal("150.00"), "GBP"),
         ]
     }
 }
