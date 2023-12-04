@@ -1,5 +1,6 @@
 package com.example.architectures.postings;
 
+import com.example.architectures.common.EventPublisher;
 import org.springframework.stereotype.Component;
 
 @Component

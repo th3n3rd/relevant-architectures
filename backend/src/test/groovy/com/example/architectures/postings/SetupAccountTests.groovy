@@ -1,5 +1,6 @@
 package com.example.architectures.postings
 
+import com.example.architectures.common.InMemoryEventPublisher
 import spock.lang.Specification
 
 class SetupAccountTests extends Specification {

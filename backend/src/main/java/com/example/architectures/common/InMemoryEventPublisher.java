@@ -1,11 +1,11 @@
-package com.example.architectures.postings;
+package com.example.architectures.common;
 
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.stereotype.Component;
 
 @Component
-class InMemoryEventPublisher implements EventPublisher {
+public class InMemoryEventPublisher implements EventPublisher {
 
     private final List<Object> events = new ArrayList<>();
 
@@ -14,7 +14,7 @@ class InMemoryEventPublisher implements EventPublisher {
         events.add(event);
     }
 
-    List<Object> publishedEvents() {
+    public List<Object> publishedEvents() {
         return events;
     }
 }
