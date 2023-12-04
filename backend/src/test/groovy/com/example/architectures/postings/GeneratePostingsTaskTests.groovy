@@ -7,15 +7,15 @@ import spock.lang.Specification
 import spock.util.concurrent.PollingConditions
 
 @SpringBootTest
-class ImportTransactionsTaskTests extends Specification {
+class GeneratePostingsTaskTests extends Specification {
 
     @Autowired
     private EventPublisher eventPublisher
 
     @Autowired
-    private Transactions transactions
+    private Postings postings
 
-    def "import transactions when a new account is setup"() {
+    def "generate postings when a new account is setup"() {
         given:
         def anyClientId = 123
         def anyAccountId = 789
@@ -25,7 +25,7 @@ class ImportTransactionsTaskTests extends Specification {
 
         then:
         new PollingConditions().within(5) {
-            !transactions.findAll().isEmpty()
+            !postings.findAll().isEmpty()
         }
     }
 }
