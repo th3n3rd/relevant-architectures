@@ -1,8 +1,6 @@
 package com.example.architectures
 
-import com.example.architectures.postings.Transaction
-import com.example.architectures.postings.TransactionsGateway
-import org.spockframework.spring.SpringSpy
+
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.web.client.TestRestTemplate
@@ -21,16 +19,6 @@ class JourneyTests extends Specification {
 
     @Autowired
     private TestRestTemplate httpClient
-
-    @SpringSpy
-    private TransactionsGateway transactionsGateway
-
-    void setup() {
-        transactionsGateway.fetchAll(clientId, klarna) >> [
-            new Transaction(clientId, new BigDecimal("10.0"), "EUR"),
-            new Transaction(clientId, new BigDecimal("15.0"), "EUR")
-        ]
-    }
 
     def "tax consultant receives postings proposal"() {
         def consultant = new TaxConsultant(httpClient, consultantId)
