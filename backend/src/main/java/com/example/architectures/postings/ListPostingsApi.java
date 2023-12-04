@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.architectures.postings;
 
 import java.util.List;
 import org.springframework.web.bind.annotation.GetMapping;

@@ -1,8 +1,8 @@
-package com.example.demo;
+package com.example.architectures.postings;
 
 import java.math.BigDecimal;
 
-record Transaction(
+public record Transaction(
     int clientId,
     BigDecimal amount,
     String currency

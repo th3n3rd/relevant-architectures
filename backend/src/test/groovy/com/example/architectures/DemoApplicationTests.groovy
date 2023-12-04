@@ -1,4 +1,4 @@
-package com.example.demo
+package com.example.architectures
 
 import org.springframework.boot.test.context.SpringBootTest
 import spock.lang.Specification

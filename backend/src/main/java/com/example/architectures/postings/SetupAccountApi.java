@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.architectures.postings;
 
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;

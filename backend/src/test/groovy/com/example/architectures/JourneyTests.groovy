@@ -1,5 +1,7 @@
-package com.example.demo
+package com.example.architectures
 
+import com.example.architectures.postings.Transaction
+import com.example.architectures.postings.TransactionsGateway
 import org.spockframework.spring.SpringSpy
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
