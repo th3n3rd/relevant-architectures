@@ -8,19 +8,20 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 class ListPostingsApi {
 
-    private final TransactionsGateway transactionsGateway;
+    private final Postings postings;
 
-    ListPostingsApi(TransactionsGateway transactionsGateway) {
-        this.transactionsGateway = transactionsGateway;
+    ListPostingsApi(Postings postings) {
+        this.postings = postings;
     }
 
     @GetMapping("/clients/{clientId}/accounts/{accountId}/postings")
     PostingList handle(@PathVariable int clientId, @PathVariable int accountId) {
         return new PostingList(
-            transactionsGateway.fetchAll(clientId, accountId)
+            postings.findAllByClientIdAndAccountId(clientId, accountId)
                 .stream()
                 .map(it -> new Posting(
                     it.clientId(),
+                    it.accountId(),
                     it.amount().toString(),
                     it.currency())
                 )
@@ -29,5 +30,5 @@ class ListPostingsApi {
     }
 
     record PostingList(List<Posting> postings) {}
-    record Posting(int clientId, String amount, String currency) {}
+    record Posting(int clientId, int accountId, String amount, String currency) {}
 }

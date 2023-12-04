@@ -17,4 +17,12 @@ class InMemoryPostings implements Postings {
     public List<Posting> findAll() {
         return postings;
     }
+
+    @Override
+    public List<Posting> findAllByClientIdAndAccountId(int clientId, int accountId) {
+        return postings
+            .stream()
+            .filter(it -> it.clientId() == clientId && it.accountId() == accountId)
+            .toList();
+    }
 }

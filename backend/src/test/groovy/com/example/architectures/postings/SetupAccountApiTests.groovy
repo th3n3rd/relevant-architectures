@@ -18,7 +18,7 @@ class SetupAccountApiTests extends Specification {
     private MockMvc client
 
     @Autowired
-    private InMemoryEventPublisher eventPublisher;
+    private InMemoryEventPublisher eventPublisher
 
     def "setup a given account"() {
         given:
@@ -26,7 +26,7 @@ class SetupAccountApiTests extends Specification {
         def anyAccountId = 789
 
         when:
-        var result = client.perform(
+        def result = client.perform(
             post("/clients/{clientId}/accounts", anyClientId)
                 .contentType("application/json")
                 .content("""
