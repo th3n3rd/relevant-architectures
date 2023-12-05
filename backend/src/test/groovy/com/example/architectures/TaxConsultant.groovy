@@ -32,6 +32,7 @@ class TaxConsultant {
         def actual = response.body.postings.collect {
             [
                 clientId: it.clientId,
+                accountId: it.accountId,
                 amount: it.amount,
                 currency: it.currency
             ]
@@ -45,6 +46,7 @@ class TaxConsultant {
 
     static class Posting {
         int clientId
+        int accountId
         String amount
         String currency
     }

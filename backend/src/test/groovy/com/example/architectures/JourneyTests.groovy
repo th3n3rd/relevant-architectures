@@ -1,9 +1,11 @@
 package com.example.architectures
 
-
+import com.example.architectures.postings.KlarnaServer
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.web.client.TestRestTemplate
+import org.springframework.test.context.DynamicPropertyRegistry
+import org.springframework.test.context.DynamicPropertySource
 import spock.lang.Specification
 
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT
@@ -13,12 +15,25 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 )
 class JourneyTests extends Specification {
 
-    public static final clientId = 123
-    public static final consultantId = 456
-    public static final klarna = 789
+    static private klarnaServer = new KlarnaServer()
+    static final clientId = 123
+    static final consultantId = 456
+    static final klarna = 789
 
     @Autowired
     private TestRestTemplate httpClient
+
+    @DynamicPropertySource
+    static void configureProperties(DynamicPropertyRegistry registry) {
+        registry.add("transactions-gateway.klarna.uri", { klarnaServer.baseUrl() })
+    }
+
+    void setup() {
+        klarnaServer.givenExistingTransactions(klarna, [
+            [id: UUID.randomUUID(), amount: [ amount: "10.0", currency: "EUR"]],
+            [id: UUID.randomUUID(), amount: [ amount: "15.0", currency: "EUR"]],
+        ])
+    }
 
     def "tax consultant receives postings proposal"() {
         def consultant = new TaxConsultant(httpClient, consultantId)
@@ -27,8 +42,8 @@ class JourneyTests extends Specification {
 
         expect:
         consultant.receivedPostings(clientId, klarna, [
-            [clientId: clientId, amount: "10.0", currency: "EUR"],
-            [clientId: clientId, amount: "15.0", currency: "EUR"],
+            [clientId: clientId, accountId: klarna, amount: "10.0", currency: "EUR"],
+            [clientId: clientId, accountId: klarna, amount: "15.0", currency: "EUR"],
         ])
     }
 

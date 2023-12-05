@@ -1,6 +1,7 @@
 package com.example.architectures.postings
 
 import com.example.architectures.common.EventPublisher
+import org.spockframework.spring.SpringBean
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import spock.lang.Specification
@@ -15,10 +16,16 @@ class GeneratePostingsTaskTests extends Specification {
     @Autowired
     private Postings postings
 
+    @SpringBean
+    private TransactionsGateway transactionsGateway = Mock()
+
     def "generate postings when a new account is setup"() {
         given:
         def anyClientId = 123
         def anyAccountId = 789
+        transactionsGateway.fetchAll(anyClientId, anyAccountId) >> [
+            new Transaction(anyClientId, anyAccountId, new BigDecimal("10.0"), "EUR")
+        ]
 
         when:
         eventPublisher.publish(new NewAccountSetup(anyClientId, anyAccountId))
