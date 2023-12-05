@@ -1,13 +1,19 @@
 package com.example.architectures.postings
 
+import org.mockserver.configuration.Configuration
 import org.mockserver.model.HttpRequest
 import org.mockserver.model.HttpResponse
 import org.mockserver.model.JsonBody
+import org.slf4j.event.Level
 
 import static org.mockserver.integration.ClientAndServer.startClientAndServer
 
 class KlarnaServer {
-    private server = startClientAndServer()
+    private configuration = Configuration
+        .configuration()
+        .logLevel(Level.WARN)
+
+    private server = startClientAndServer(configuration)
 
     def baseUrl() {
         return "http://localhost:$server.localPort"
