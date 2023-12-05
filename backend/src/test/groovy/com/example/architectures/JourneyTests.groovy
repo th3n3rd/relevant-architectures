@@ -18,7 +18,7 @@ class JourneyTests extends Specification {
     static private klarnaServer = new KlarnaServer()
     static final clientId = 123
     static final consultantId = 456
-    static final klarna = 789
+    static final klarnaAccount = 789
 
     @Autowired
     private TestRestTemplate httpClient
@@ -29,7 +29,8 @@ class JourneyTests extends Specification {
     }
 
     void setup() {
-        klarnaServer.givenExistingTransactions(klarna, [
+        klarnaServer.givenConsentIsApproved()
+        klarnaServer.givenExistingTransactions(klarnaAccount, [
             [id: UUID.randomUUID(), amount: [ amount: "10.0", currency: "EUR"]],
             [id: UUID.randomUUID(), amount: [ amount: "15.0", currency: "EUR"]],
         ])
@@ -38,12 +39,12 @@ class JourneyTests extends Specification {
     def "tax consultant receives postings proposal"() {
         def consultant = new TaxConsultant(httpClient, consultantId)
 
-        consultant.setupAccount(clientId, klarna)
+        consultant.setupAccount(clientId, klarnaAccount)
 
         expect:
-        consultant.receivedPostings(clientId, klarna, [
-            [clientId: clientId, accountId: klarna, amount: "10.0", currency: "EUR"],
-            [clientId: clientId, accountId: klarna, amount: "15.0", currency: "EUR"],
+        consultant.receivedPostings(clientId, klarnaAccount, [
+            [clientId: clientId, accountId: klarnaAccount, amount: "10.0", currency: "EUR"],
+            [clientId: clientId, accountId: klarnaAccount, amount: "15.0", currency: "EUR"],
         ])
     }
 

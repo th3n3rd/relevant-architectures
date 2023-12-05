@@ -20,10 +20,15 @@ class KlarnaPaymentGatewayTests extends Specification {
         registry.add("payment-gateway.klarna.uri", { server.baseUrl() })
     }
 
+    void cleanup() {
+        server.reset()
+    }
+
     def "fetches all transactions for a given account"() {
         given:
         def anyClientId = 123
         def anyAccountId = 789
+        server.givenConsentIsApproved()
         server.givenExistingTransactions(anyAccountId, [
             [id: UUID.randomUUID(), amount: [ amount: "90.0", currency: "EUR" ]]
         ])
@@ -37,4 +42,29 @@ class KlarnaPaymentGatewayTests extends Specification {
         ]
     }
 
+    def "fails to fetch transactions if does not have a consent"() {
+        given:
+        def anyClientId = 123
+        def anyAccountId = 789
+        server.givenConsentIsRejected()
+
+        when:
+        transactionsGateway.fetchTransactions(anyClientId, anyAccountId)
+
+        then:
+        thrown(FetchTransactionsFailed.Unauthorised)
+    }
+
+    def "fails to fetch transactions if the consent is expired"() {
+        given:
+        def anyClientId = 123
+        def anyAccountId = 789
+        server.givenConsentWillExpire()
+
+        when:
+        transactionsGateway.fetchTransactions(anyClientId, anyAccountId)
+
+        then:
+        thrown(FetchTransactionsFailed.Unauthorised)
+    }
 }
