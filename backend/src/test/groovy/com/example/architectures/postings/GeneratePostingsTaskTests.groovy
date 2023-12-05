@@ -17,13 +17,13 @@ class GeneratePostingsTaskTests extends Specification {
     private Postings postings
 
     @SpringBean
-    private TransactionsGateway transactionsGateway = Mock()
+    private PaymentGateway transactionsGateway = Mock()
 
     def "generate postings when a new account is setup"() {
         given:
         def anyClientId = 123
         def anyAccountId = 789
-        transactionsGateway.fetchAll(anyClientId, anyAccountId) >> [
+        transactionsGateway.fetchTransactions(anyClientId, anyAccountId) >> [
             new Transaction(anyClientId, anyAccountId, new BigDecimal("10.0"), "EUR")
         ]
 

@@ -8,16 +8,16 @@ import org.springframework.test.context.DynamicPropertySource
 import spock.lang.Specification
 
 @SpringBootTest
-class KlarnaTransactionsGatewayTests extends Specification {
+class KlarnaPaymentGatewayTests extends Specification {
 
     @Autowired
-    private TransactionsGateway transactionsGateway
+    private PaymentGateway transactionsGateway
 
     static private server = new KlarnaServer()
 
     @DynamicPropertySource
     static void configureProperties(DynamicPropertyRegistry registry) {
-        registry.add("transactions-gateway.klarna.uri", { server.baseUrl() })
+        registry.add("payment-gateway.klarna.uri", { server.baseUrl() })
     }
 
     def "fetches all transactions for a given account"() {
@@ -29,7 +29,7 @@ class KlarnaTransactionsGatewayTests extends Specification {
         ])
 
         when:
-        def transactions = transactionsGateway.fetchAll(anyClientId, anyAccountId)
+        def transactions = transactionsGateway.fetchTransactions(anyClientId, anyAccountId)
 
         then:
         transactions == [

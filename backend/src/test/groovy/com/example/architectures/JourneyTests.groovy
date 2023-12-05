@@ -25,7 +25,7 @@ class JourneyTests extends Specification {
 
     @DynamicPropertySource
     static void configureProperties(DynamicPropertyRegistry registry) {
-        registry.add("transactions-gateway.klarna.uri", { klarnaServer.baseUrl() })
+        registry.add("payment-gateway.klarna.uri", { klarnaServer.baseUrl() })
     }
 
     void setup() {

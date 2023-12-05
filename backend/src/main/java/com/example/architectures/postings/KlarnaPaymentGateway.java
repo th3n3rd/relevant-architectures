@@ -9,19 +9,19 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 @Component
-@EnableConfigurationProperties(KlarnaTransactionsGateway.Properties.class)
-class KlarnaTransactionsGateway implements TransactionsGateway {
+@EnableConfigurationProperties(KlarnaPaymentGateway.Properties.class)
+class KlarnaPaymentGateway implements PaymentGateway {
 
     private final RestTemplate client;
 
-    KlarnaTransactionsGateway(Properties properties, RestTemplateBuilder builder) {
+    KlarnaPaymentGateway(Properties properties, RestTemplateBuilder builder) {
         this.client = builder
             .rootUri(properties.uri())
             .build();
     }
 
     @Override
-    public List<Transaction> fetchAll(int clientId, int accountId) {
+    public List<Transaction> fetchTransactions(int clientId, int accountId) {
         var receivedTransactions = client.getForObject(
             "/v2/accounts/{accountId}/transactions",
             Klarna.Transactions.class,
@@ -38,7 +38,7 @@ class KlarnaTransactionsGateway implements TransactionsGateway {
             .toList();
     }
 
-    @ConfigurationProperties(prefix = "transactions-gateway.klarna")
+    @ConfigurationProperties(prefix = "payment-gateway.klarna")
     record Properties(String uri) {}
 
     private static class Klarna {
