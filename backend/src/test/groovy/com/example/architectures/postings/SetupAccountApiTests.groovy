@@ -1,6 +1,7 @@
 package com.example.architectures.postings
 
 import com.example.architectures.common.InMemoryEventPublisher
+import com.example.architectures.common.WebSecurityConfig
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.context.annotation.Import
@@ -11,7 +12,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
 @WebMvcTest(SetupAccountApi)
-@Import([SetupAccount, InMemoryEventPublisher])
+@Import([SetupAccount, InMemoryEventPublisher, WebSecurityConfig])
 class SetupAccountApiTests extends Specification {
 
     @Autowired

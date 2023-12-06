@@ -1,5 +1,6 @@
 package com.example.architectures.postings
 
+import com.example.architectures.common.WebSecurityConfig
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.context.annotation.Import
@@ -11,7 +12,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
 @WebMvcTest(ListPostingsApi)
-@Import([InMemoryPostings])
+@Import([InMemoryPostings, WebSecurityConfig])
 class ListPostingsApiTests extends Specification {
 
     @Autowired
