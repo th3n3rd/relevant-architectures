@@ -1,5 +1,6 @@
 package com.example.architectures.postings;
 
+import org.jmolecules.event.annotation.DomainEventHandler;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
@@ -12,6 +13,7 @@ class GeneratePostingsTask {
         this.generatePostings = generatePostings;
     }
 
+    @DomainEventHandler
     @EventListener
     void on(NewAccountSetup event) {
         generatePostings.handle(event.clientId(), event.accountId());

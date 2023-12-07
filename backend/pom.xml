@@ -17,6 +17,7 @@
 		<spock-core.version>2.4-M1-groovy-4.0</spock-core.version>
 		<gmavenplus-plugin.version>3.0.0</gmavenplus-plugin.version>
 		<nimbus-jose-jwt.version>9.30.2</nimbus-jose-jwt.version>
+		<jmolecules.version>1.8.0</jmolecules.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -39,6 +40,11 @@
 			<groupId>org.mock-server</groupId>
 			<artifactId>mockserver-netty</artifactId>
 			<version>5.15.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jmolecules</groupId>
+			<artifactId>jmolecules-events</artifactId>
+			<version>${jmolecules.version}</version>
 		</dependency>
 
 		<dependency>
