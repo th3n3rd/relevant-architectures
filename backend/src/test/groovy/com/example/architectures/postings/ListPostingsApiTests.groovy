@@ -20,7 +20,7 @@ class ListPostingsApiTests extends Specification {
     private MockMvc client
 
     @Autowired
-    private InMemoryPostings postings;
+    private InMemoryPostings postings
 
     def "lists postings for a given client and account"() {
         given:
@@ -50,5 +50,19 @@ class ListPostingsApiTests extends Specification {
             ]
         }
         """))
+    }
+
+    def "fails when not authenticated"() {
+        given:
+        def anyClientId = 123
+        def anyAccountId = 789
+
+        when:
+        def result = client.perform(
+            get("/clients/{clientId}/accounts/{accountId}/postings", anyClientId, anyAccountId)
+        )
+
+        then:
+        result.andExpect(status().isUnauthorized())
     }
 }

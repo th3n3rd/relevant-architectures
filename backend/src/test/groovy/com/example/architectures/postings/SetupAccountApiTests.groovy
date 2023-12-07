@@ -44,4 +44,23 @@ class SetupAccountApiTests extends Specification {
         eventPublisher.publishedEvents() == [new NewAccountSetup(anyClientId, anyAccountId)]
     }
 
+    def "fails when not authenticated"() {
+        given:
+        def anyClientId = 123
+        def anyAccountId = 789
+
+        when:
+        def result = client.perform(
+            post("/clients/{clientId}/accounts", anyClientId)
+                .contentType("application/json")
+                .content("""
+                {
+                    "accountId": "${anyAccountId}"
+                }
+                """)
+        )
+
+        then:
+        result.andExpect(status().isUnauthorized())
+    }
 }
