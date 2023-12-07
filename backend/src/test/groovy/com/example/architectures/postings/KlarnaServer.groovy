@@ -1,7 +1,6 @@
 package com.example.architectures.postings
 
 import org.mockserver.configuration.Configuration
-import org.mockserver.mock.Expectation
 import org.mockserver.model.HttpRequest
 import org.mockserver.model.HttpResponse
 import org.mockserver.model.JsonBody
@@ -33,6 +32,7 @@ class KlarnaServer {
                 .withMethod("GET")
                 .withHeader("consent-id", validConsentId)
                 .withPath("/v2/accounts/$accountId/transactions"))
+            .withId("klarna server - list transactions")
             .respond(HttpResponse.response()
                 .withStatusCode(200)
                 .withBody(JsonBody.json([
@@ -54,6 +54,7 @@ class KlarnaServer {
         server
             .when(HttpRequest.request()
                 .withHeader("consent-id", expiredConsentId))
+            .withId("klarna server - consent expired")
             .respond(HttpResponse.response()
                 .withStatusCode(403))
     }
@@ -63,6 +64,7 @@ class KlarnaServer {
             .when(HttpRequest.request()
                 .withMethod("POST")
                 .withPath("/v2/consent-sessions"))
+            .withId("klarna server - request for consent is $status")
             .respond(HttpResponse.response()
                 .withStatusCode(200)
                 .withBody(JsonBody.json([

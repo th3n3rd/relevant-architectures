@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Import
 import org.springframework.test.web.servlet.MockMvc
 import spock.lang.Specification
 
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.jwt
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
@@ -29,6 +30,7 @@ class SetupAccountApiTests extends Specification {
         when:
         def result = client.perform(
             post("/clients/{clientId}/accounts", anyClientId)
+                .with(jwt())
                 .contentType("application/json")
                 .content("""
                 {
