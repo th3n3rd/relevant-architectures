@@ -1,8 +1,10 @@
 package com.example.architectures.common;
 
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 
+@Primary
 @Component
 class SpringEventPublisher implements EventPublisher {
 

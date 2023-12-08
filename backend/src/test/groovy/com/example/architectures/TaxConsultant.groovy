@@ -15,7 +15,7 @@ class TaxConsultant {
     }
 
     def authenticateOn(AuthServer server) {
-        this.authenticationToken = server.validToken();
+        this.authenticationToken = server.validToken(consultantId);
     }
 
     def setupAccount(int clientId, int accountId) {

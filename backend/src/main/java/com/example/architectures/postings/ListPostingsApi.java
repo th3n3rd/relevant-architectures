@@ -1,6 +1,7 @@
 package com.example.architectures.postings;
 
 import java.util.List;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,8 +15,12 @@ class ListPostingsApi {
         this.postings = postings;
     }
 
+    @PreAuthorize("@inMemoryAuthorisations.existsByConsultantIdAndClientId(principal.claims['consultantId'], #clientId)")
     @GetMapping("/clients/{clientId}/accounts/{accountId}/postings")
-    PostingList handle(@PathVariable int clientId, @PathVariable int accountId) {
+    PostingList handle(
+        @PathVariable int clientId,
+        @PathVariable int accountId
+    ) {
         return new PostingList(
             postings.findAllByClientIdAndAccountId(clientId, accountId)
                 .stream()

@@ -6,7 +6,6 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.stereotype.Component;
 
 @Component
-@ConditionalOnMissingBean(EventPublisher.class)
 public class InMemoryEventPublisher implements EventPublisher {
 
     private final List<Object> events = new ArrayList<>();

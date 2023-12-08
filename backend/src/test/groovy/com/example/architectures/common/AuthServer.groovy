@@ -14,6 +14,7 @@ import org.mockserver.model.JsonBody
 import org.slf4j.event.Level
 
 import static org.mockserver.integration.ClientAndServer.startClientAndServer
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.jwt
 
 class AuthServer {
     private jwk = new RSAKeyGenerator(2048)
@@ -60,7 +61,7 @@ class AuthServer {
         return "http://localhost:$server.localPort$path" as String
     }
 
-    def validToken() {
+    def validToken(int consultantId) {
         def signer = new RSASSASigner(jwk);
 
         def token = new SignedJWT(
@@ -69,6 +70,7 @@ class AuthServer {
                 .build(),
             new JWTClaimsSet.Builder()
                 .subject("alice")
+                .claim("consultantId", consultantId)
                 .issuer(url())
                 .expirationTime(new Date(new Date().getTime() + 60 * 1000))
                 .build()
@@ -77,5 +79,9 @@ class AuthServer {
         token.sign(signer)
 
         return token.serialize()
+    }
+
+    static validTokenForSpring(int consultantId) {
+        return jwt().jwt({ it.claim("consultantId", consultantId)})
     }
 }

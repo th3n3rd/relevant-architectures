@@ -1,6 +1,7 @@
 package com.example.architectures
 
 import com.example.architectures.common.AuthServer
+import com.example.architectures.postings.InMemoryAuthorisations
 import com.example.architectures.postings.KlarnaServer
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
@@ -25,6 +26,9 @@ class JourneyTests extends Specification {
     @Autowired
     private TestRestTemplate httpClient
 
+    @Autowired
+    private InMemoryAuthorisations authorisations
+
     @DynamicPropertySource
     static void configureProperties(DynamicPropertyRegistry registry) {
         registry.add("payment-gateway.klarna.uri", { klarnaServer.baseUrl() })
@@ -32,6 +36,7 @@ class JourneyTests extends Specification {
     }
 
     void setup() {
+        authorisations.authorise(consultantId, clientId)
         klarnaServer.givenConsentIsApproved()
         klarnaServer.givenExistingTransactions(klarnaAccount, [
             [id: UUID.randomUUID(), amount: [ amount: "10.0", currency: "EUR"]],
