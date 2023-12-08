@@ -30,6 +30,7 @@ class ListPostingsApiTests extends Specification {
 
     void setup() {
         authorisations.deleteAll()
+        postings.deleteAll()
     }
 
     def "lists postings for a given client and account"() {
@@ -60,6 +61,43 @@ class ListPostingsApiTests extends Specification {
             "postings": [
                 { "clientId": $anyClientId, "accountId": $klarna, "amount": "120.0", "currency": "GBP" }
             ]
+        }
+        """))
+    }
+
+    def "paginate postings for a given client and account"() {
+        given:
+        def anyConsultantId = 456
+        def anyClientId = 135
+        def anyAccountId = 789
+        authorisations.authorise(anyConsultantId, anyClientId)
+        postings.saveAll([
+            new Posting(anyClientId, anyAccountId, new BigDecimal("45.0"), "GBP"),
+            new Posting(anyClientId, anyAccountId, new BigDecimal("70.0"), "EUR"),
+            new Posting(anyClientId, anyAccountId, new BigDecimal("15.0"), "GPB"),
+        ])
+
+        when:
+        def result = client.perform(
+            get("/clients/{clientId}/accounts/{accountId}/postings", anyClientId, anyAccountId)
+                .queryParam("page", "1")
+                .queryParam("size", "1")
+                .with(validTokenForSpring(anyConsultantId))
+        )
+
+        then:
+        result.andExpect(status().isOk())
+        result.andExpect(content().json("""
+        {
+            "postings": [
+                { "clientId": $anyClientId, "accountId": $anyAccountId, "amount": "70.0", "currency": "EUR" }
+            ],
+            "metadata": {
+                "pageNumber": 1,
+                "pageSize": 1,
+                "totalPages": 3,
+                "totalElements": 3
+            }
         }
         """))
     }

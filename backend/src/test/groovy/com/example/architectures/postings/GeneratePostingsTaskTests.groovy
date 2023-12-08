@@ -14,7 +14,7 @@ class GeneratePostingsTaskTests extends Specification {
     private EventPublisher eventPublisher
 
     @Autowired
-    private Postings postings
+    private InMemoryPostings postings
 
     @SpringBean
     private PaymentGateway transactionsGateway = Mock()

@@ -2,10 +2,13 @@ package com.example.architectures.postings;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 @Repository
-class InMemoryPostings implements Postings {
+class InMemoryPostings implements Postings, PaginatedPostings {
     private final List<Posting> postings = new ArrayList<>();
 
     @Override
@@ -13,16 +16,31 @@ class InMemoryPostings implements Postings {
         this.postings.addAll(postings);
     }
 
-    @Override
     public List<Posting> findAll() {
         return postings;
     }
 
     @Override
-    public List<Posting> findAllByClientIdAndAccountId(int clientId, int accountId) {
-        return postings
+    public Page<Posting> findAllByClientIdAndAccountId(int clientId, int accountId, Pageable page) {
+        var nonPaginatedPostings = postings
             .stream()
             .filter(it -> it.clientId() == clientId && it.accountId() == accountId)
             .toList();
+
+        var paginatedPostings = nonPaginatedPostings
+            .stream()
+            .skip(page.getOffset())
+            .limit(page.getPageSize())
+            .toList();
+
+        return new PageImpl<>(
+            paginatedPostings,
+            page,
+            nonPaginatedPostings.size()
+        );
+    }
+
+    public void deleteAll() {
+        postings.clear();
     }
 }
