@@ -15,7 +15,7 @@ class ListPostingsApi {
         this.postings = postings;
     }
 
-    @PreAuthorize("@inMemoryAuthorisations.existsByConsultantIdAndClientId(principal.claims['consultantId'], #clientId)")
+    @PreAuthorize("@authorisations.existsByConsultantIdAndClientId(principal.claims['consultantId'], #clientId)")
     @GetMapping("/clients/{clientId}/accounts/{accountId}/postings")
     PostingList handle(
         @PathVariable int clientId,

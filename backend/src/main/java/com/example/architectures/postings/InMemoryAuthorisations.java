@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.springframework.stereotype.Component;
 
-@Component
+@Component("authorisations")
 public class InMemoryAuthorisations implements Authorisations {
     private final List<Authorisation> authorisations = new ArrayList<>();
 

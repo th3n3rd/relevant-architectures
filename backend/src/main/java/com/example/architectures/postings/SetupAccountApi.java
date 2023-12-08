@@ -17,7 +17,7 @@ class SetupAccountApi {
         this.setupAccount = setupAccount;
     }
 
-    @PreAuthorize("@inMemoryAuthorisations.existsByConsultantIdAndClientId(principal.claims['consultantId'], #clientId)")
+    @PreAuthorize("@authorisations.existsByConsultantIdAndClientId(principal.claims['consultantId'], #clientId)")
     @PostMapping("/clients/{clientId}/accounts")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     void handle(@PathVariable int clientId, @RequestBody Account account) {
