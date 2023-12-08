@@ -1,7 +1,6 @@
 package com.example.architectures.postings;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,7 +16,7 @@ class SetupAccountApi {
         this.setupAccount = setupAccount;
     }
 
-    @PreAuthorize("@authorisations.existsByConsultantIdAndClientId(principal.claims['consultantId'], #clientId)")
+    @ConsultantAuthorised
     @PostMapping("/clients/{clientId}/accounts")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     void handle(@PathVariable int clientId, @RequestBody Account account) {
