@@ -20,6 +20,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 ])
 class SetupAccountApiTests extends Specification {
 
+    private static final anyClientId = 123
+    private static final anyAccountId = 789
+    private static final anyConsultantId = 456
+
     @Autowired
     private MockMvc client
 
@@ -35,9 +39,6 @@ class SetupAccountApiTests extends Specification {
 
     def "setup a given account"() {
         given:
-        def anyClientId = 123
-        def anyAccountId = 789
-        def anyConsultantId = 456
         authorisations.authorise(anyConsultantId, anyClientId)
 
         when:
@@ -47,28 +48,26 @@ class SetupAccountApiTests extends Specification {
                 .contentType("application/json")
                 .content("""
                 {
-                    "accountId": "${anyAccountId}"
+                    "accountId": $anyAccountId
                 }
                 """)
         )
 
         then:
         result.andExpect(status().isNoContent())
-        eventPublisher.publishedEvents() == [new NewAccountSetup(anyClientId, anyAccountId)]
+        eventPublisher.publishedEvents() == [
+            new NewAccountSetup(anyClientId, anyAccountId)
+        ]
     }
 
     def "fails when not authenticated"() {
-        given:
-        def anyClientId = 123
-        def anyAccountId = 789
-
         when:
         def result = client.perform(
             post("/clients/{clientId}/accounts", anyClientId)
                 .contentType("application/json")
                 .content("""
                 {
-                    "accountId": "${anyAccountId}"
+                    "accountId": $anyAccountId
                 }
                 """)
         )
@@ -78,11 +77,6 @@ class SetupAccountApiTests extends Specification {
     }
 
     def "fails when not authorised to manage the given client"() {
-        given:
-        def anyClientId = 123
-        def anyAccountId = 789
-        def anyConsultantId = 456
-
         when:
         def result = client.perform(
             post("/clients/{clientId}/accounts", anyClientId)
@@ -90,7 +84,7 @@ class SetupAccountApiTests extends Specification {
                 .contentType("application/json")
                 .content("""
                 {
-                    "accountId": "${anyAccountId}"
+                    "accountId": $anyAccountId
                 }
                 """)
         )

@@ -19,6 +19,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 ])
 class ListPostingsApiTests extends Specification {
 
+    private static final anyConsultantId = 456
+    private static final anyClientId = 123
+    private static final anyAccountId = 789
+
     @Autowired
     private MockMvc client
 
@@ -35,8 +39,6 @@ class ListPostingsApiTests extends Specification {
 
     def "lists postings for a given client and account"() {
         given:
-        def anyConsultantId = 456
-        def anyClientId = 123
         def anotherClientId = 135
         def klarna = 789
         def amazon = 792
@@ -59,7 +61,12 @@ class ListPostingsApiTests extends Specification {
         result.andExpect(content().json("""
         {
             "postings": [
-                { "clientId": $anyClientId, "accountId": $klarna, "amount": "120.0", "currency": "GBP" }
+                {
+                    "clientId": $anyClientId,
+                    "accountId": $klarna,
+                    "amount": "120.0",
+                    "currency": "GBP"
+                }
             ]
         }
         """))
@@ -67,9 +74,6 @@ class ListPostingsApiTests extends Specification {
 
     def "paginate postings for a given client and account"() {
         given:
-        def anyConsultantId = 456
-        def anyClientId = 135
-        def anyAccountId = 789
         authorisations.authorise(anyConsultantId, anyClientId)
         postings.saveAll([
             new Posting(anyClientId, anyAccountId, new BigDecimal("45.0"), "GBP"),
@@ -90,7 +94,12 @@ class ListPostingsApiTests extends Specification {
         result.andExpect(content().json("""
         {
             "postings": [
-                { "clientId": $anyClientId, "accountId": $anyAccountId, "amount": "70.0", "currency": "EUR" }
+                {
+                    "clientId": $anyClientId,
+                    "accountId": $anyAccountId,
+                    "amount": "70.0",
+                    "currency": "EUR"
+                }
             ],
             "metadata": {
                 "pageNumber": 1,
@@ -103,10 +112,6 @@ class ListPostingsApiTests extends Specification {
     }
 
     def "fails when not authenticated"() {
-        given:
-        def anyClientId = 123
-        def anyAccountId = 789
-
         when:
         def result = client.perform(
             get("/clients/{clientId}/accounts/{accountId}/postings", anyClientId, anyAccountId)
@@ -117,11 +122,6 @@ class ListPostingsApiTests extends Specification {
     }
 
     def "fails when not authorised to manage the given client"() {
-        given:
-        def anyClientId = 123
-        def anyAccountId = 789
-        def anyConsultantId = 456
-
         when:
         def result = client.perform(
             get("/clients/{clientId}/accounts/{accountId}/postings", anyClientId, anyAccountId)

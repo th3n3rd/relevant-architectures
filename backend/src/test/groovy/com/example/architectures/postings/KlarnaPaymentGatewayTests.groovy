@@ -10,10 +10,12 @@ import spock.lang.Specification
 @SpringBootTest
 class KlarnaPaymentGatewayTests extends Specification {
 
+    static private server = new KlarnaServer()
+    static final anyClientId = 123
+    static final anyAccountId = 789
+
     @Autowired
     private PaymentGateway transactionsGateway
-
-    static private server = new KlarnaServer()
 
     @DynamicPropertySource
     static void configureProperties(DynamicPropertyRegistry registry) {
@@ -26,8 +28,6 @@ class KlarnaPaymentGatewayTests extends Specification {
 
     def "fetches all transactions for a given account"() {
         given:
-        def anyClientId = 123
-        def anyAccountId = 789
         server.givenConsentIsApproved()
         server.givenExistingTransactions(anyAccountId, [
             [id: UUID.randomUUID(), amount: [ amount: "90.0", currency: "EUR" ]]
@@ -44,8 +44,6 @@ class KlarnaPaymentGatewayTests extends Specification {
 
     def "fails to fetch transactions if does not have a consent"() {
         given:
-        def anyClientId = 123
-        def anyAccountId = 789
         server.givenConsentIsRejected()
 
         when:
@@ -57,8 +55,6 @@ class KlarnaPaymentGatewayTests extends Specification {
 
     def "fails to fetch transactions if the consent is expired"() {
         given:
-        def anyClientId = 123
-        def anyAccountId = 789
         server.givenConsentWillExpire()
 
         when:
