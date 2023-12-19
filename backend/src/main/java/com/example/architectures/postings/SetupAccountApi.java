@@ -20,8 +20,8 @@ class SetupAccountApi {
     @PostMapping("/clients/{clientId}/accounts")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     void handle(@PathVariable int clientId, @RequestBody Account account) {
-        setupAccount.handle(clientId, account.accountId());
+        setupAccount.handle(clientId, account.accountId().value());
     }
 
-    record Account(int accountId) {}
+    record Account(AccountId accountId) {}
 }

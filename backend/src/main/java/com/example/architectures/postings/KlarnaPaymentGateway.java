@@ -32,7 +32,7 @@ class KlarnaPaymentGateway implements PaymentGateway {
 
         var request = RequestEntity
             .get("/v2/accounts/{accountId}/transactions", accountId)
-            .header("consent-id", consent.consentId)
+            .header("consent-value", consent.consentId)
             .build();
 
         try {
