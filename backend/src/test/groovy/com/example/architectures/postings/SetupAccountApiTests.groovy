@@ -48,7 +48,7 @@ class SetupAccountApiTests extends Specification {
                 .contentType("application/json")
                 .content("""
                 {
-                    "accountId": $anyAccountId
+                    "accountId": "$anyAccountId"
                 }
                 """)
         )
@@ -67,7 +67,7 @@ class SetupAccountApiTests extends Specification {
                 .contentType("application/json")
                 .content("""
                 {
-                    "accountId": $anyAccountId
+                    "accountId": "$anyAccountId"
                 }
                 """)
         )
@@ -84,7 +84,7 @@ class SetupAccountApiTests extends Specification {
                 .contentType("application/json")
                 .content("""
                 {
-                    "accountId": $anyAccountId
+                    "accountId": "$anyAccountId"
                 }
                 """)
         )
