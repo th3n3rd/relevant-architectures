@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 
 record Posting(
     ClientId clientId,
-    int accountId,
+    AccountId accountId,
     BigDecimal amount,
     String currency
 ) {}

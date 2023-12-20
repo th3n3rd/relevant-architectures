@@ -3,5 +3,5 @@ package com.example.architectures.postings;
 import java.util.List;
 
 public interface PaymentGateway {
-    List<Transaction> fetchTransactions(ClientId clientId, int accountId);
+    List<Transaction> fetchTransactions(ClientId clientId, AccountId accountId);
 }

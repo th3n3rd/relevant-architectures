@@ -5,22 +5,19 @@ import spock.lang.Specification
 
 class SetupAccountTests extends Specification {
 
-    private static final amyClientId = new ClientId(123)
-    private static final anyAccountId = 789
+    private static final anyClientId = new ClientId(123)
+    private static final anyAccountId = new AccountId(789)
 
     def eventPublisher = new InMemoryEventPublisher()
     def setupAccount = new SetupAccount(eventPublisher)
 
     def "publish a new event"() {
         when:
-        setupAccount.handle(
-            amyClientId,
-            anyAccountId
-        )
+        setupAccount.handle(anyClientId, anyAccountId)
 
         then:
         eventPublisher.publishedEvents() == [
-            new NewAccountSetup(amyClientId, anyAccountId)
+            new NewAccountSetup(anyClientId, anyAccountId)
         ]
     }
 }

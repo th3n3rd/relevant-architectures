@@ -26,17 +26,17 @@ class KlarnaServer {
         return "http://localhost:$server.localPort"
     }
 
-    def givenExistingTransactions(accountId, transactions) {
+    def givenExistingTransactions(AccountId accountId, transactions) {
         server
             .when(HttpRequest.request()
                 .withMethod("GET")
                 .withHeader("consent-id", validConsentId)
-                .withPath("/v2/accounts/$accountId/transactions"))
+                .withPath("/v2/accounts/$accountId.value/transactions"))
             .withId("klarna server - list transactions")
             .respond(HttpResponse.response()
                 .withStatusCode(200)
                 .withBody(JsonBody.json([
-                    account_id: accountId,
+                    account_id: accountId.value(),
                     transactions: transactions
                 ])))
     }

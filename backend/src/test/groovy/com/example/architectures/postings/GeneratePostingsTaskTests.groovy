@@ -11,7 +11,7 @@ import spock.util.concurrent.PollingConditions
 class GeneratePostingsTaskTests extends Specification {
 
     private static anyClientId = new ClientId(123)
-    private static anyAccountId = 789
+    private static anyAccountId = new AccountId(789)
 
     @Autowired
     private EventPublisher eventPublisher

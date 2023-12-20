@@ -3,6 +3,7 @@ package com.example.architectures.postings
 import com.example.architectures.common.InMemoryEventPublisher
 import com.example.architectures.common.WebSecurityConfig
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.test.autoconfigure.json.AutoConfigureJson
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.test.web.servlet.MockMvc
 import spock.lang.Specification
@@ -18,10 +19,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
     InMemoryAuthorisations,
     WebSecurityConfig
 ])
+@AutoConfigureJson
 class SetupAccountApiTests extends Specification {
 
     private static final anyClientId = new ClientId(123)
-    private static final anyAccountId = 789
+    private static final anyAccountId = new AccountId(789)
     private static final anyConsultantId = 456
 
     @Autowired
@@ -48,7 +50,7 @@ class SetupAccountApiTests extends Specification {
                 .contentType("application/json")
                 .content("""
                 {
-                    "accountId": $anyAccountId
+                    "accountId": $anyAccountId.value
                 }
                 """)
         )
@@ -67,7 +69,7 @@ class SetupAccountApiTests extends Specification {
                 .contentType("application/json")
                 .content("""
                 {
-                    "accountId": $anyAccountId
+                    "accountId": $anyAccountId.value
                 }
                 """)
         )
@@ -84,7 +86,7 @@ class SetupAccountApiTests extends Specification {
                 .contentType("application/json")
                 .content("""
                 {
-                    "accountId": $anyAccountId
+                    "accountId": $anyAccountId.value
                 }
                 """)
         )

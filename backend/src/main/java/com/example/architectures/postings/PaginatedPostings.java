@@ -4,5 +4,5 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 interface PaginatedPostings {
-    Page<Posting> findAllByClientIdAndAccountId(ClientId clientId, int accountId, Pageable page);
+    Page<Posting> findAllByClientIdAndAccountId(ClientId clientId, AccountId accountId, Pageable page);
 }

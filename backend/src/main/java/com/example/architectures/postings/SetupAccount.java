@@ -14,7 +14,7 @@ class SetupAccount {
     }
 
     @DomainEventPublisher
-    void handle(ClientId clientId, int accountId) {
+    void handle(ClientId clientId, AccountId accountId) {
         eventPublisher.publish(new NewAccountSetup(clientId, accountId));
     }
 }

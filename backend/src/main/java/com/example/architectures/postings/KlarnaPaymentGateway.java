@@ -24,14 +24,14 @@ class KlarnaPaymentGateway implements PaymentGateway {
     }
 
     @Override
-    public List<Transaction> fetchTransactions(ClientId clientId, int accountId) {
+    public List<Transaction> fetchTransactions(ClientId clientId, AccountId accountId) {
         var consent = requestConsent(accountId);
         if (consent.isRejected()) {
             throw new FetchTransactionsFailed.Unauthorised();
         }
 
         var request = RequestEntity
-            .get("/v2/accounts/{accountId}/transactions", accountId)
+            .get("/v2/accounts/{accountId}/transactions", accountId.value())
             .header("consent-id", consent.consentId)
             .build();
 
@@ -54,10 +54,10 @@ class KlarnaPaymentGateway implements PaymentGateway {
         }
     }
 
-    private Klarna.Consent requestConsent(int accountId) {
+    private Klarna.Consent requestConsent(AccountId accountId) {
         return client.postForObject(
             "/v2/consent-sessions",
-            new Klarna.RequestConsent(accountId),
+            new Klarna.RequestConsent(accountId.value()),
             Klarna.Consent.class
         );
     }

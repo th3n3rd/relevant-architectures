@@ -1,6 +1,7 @@
 package com.example.architectures
 
 import com.example.architectures.common.AuthServer
+import com.example.architectures.postings.AccountId
 import com.example.architectures.postings.ClientId
 import org.springframework.boot.test.web.client.TestRestTemplate
 import org.springframework.http.RequestEntity
@@ -19,18 +20,18 @@ class TaxConsultant {
         this.authenticationToken = server.validToken(consultantId);
     }
 
-    def setupAccount(ClientId clientId, int accountId) {
+    def setupAccount(ClientId clientId, AccountId accountId) {
         def request = RequestEntity
             .post("/clients/{clientId}/accounts", clientId.value())
             .header("Authorization", "Bearer $authenticationToken")
-            .body([ accountId: accountId ])
+            .body([ accountId: accountId.value() ])
         def response = httpClient.exchange(request, Void)
         assert response.statusCode.is2xxSuccessful()
     }
 
-    void receivedPostings(ClientId clientId, accountId, expected) {
+    void receivedPostings(ClientId clientId, AccountId accountId, expected) {
         def request = RequestEntity
-            .get("/clients/{clientId}/accounts/{accountId}/postings", clientId.value(), accountId)
+            .get("/clients/{clientId}/accounts/{accountId}/postings", clientId.value(), accountId.value())
             .header("Authorization", "Bearer $authenticationToken")
             .build()
         def response = httpClient.exchange(request, PostingsList)

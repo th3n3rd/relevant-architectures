@@ -13,7 +13,7 @@ class GeneratePostings {
         this.postings = postings;
     }
 
-    void handle(ClientId clientId, int accountId) {
+    void handle(ClientId clientId, AccountId accountId) {
         var newPostings = paymentGateway.fetchTransactions(clientId, accountId)
             .stream()
             .map(it -> new Posting(it.clientId(), it.accountId(), it.amount(), it.currency()))

@@ -23,5 +23,5 @@ class SetupAccountApi {
         setupAccount.handle(clientId, account.accountId());
     }
 
-    record Account(int accountId) {}
+    record Account(AccountId accountId) {}
 }

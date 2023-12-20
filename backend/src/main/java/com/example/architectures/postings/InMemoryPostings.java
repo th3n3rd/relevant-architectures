@@ -21,10 +21,10 @@ class InMemoryPostings implements Postings, PaginatedPostings {
     }
 
     @Override
-    public Page<Posting> findAllByClientIdAndAccountId(ClientId clientId, int accountId, Pageable page) {
+    public Page<Posting> findAllByClientIdAndAccountId(ClientId clientId, AccountId accountId, Pageable page) {
         var nonPaginatedPostings = postings
             .stream()
-            .filter(it -> it.clientId().equals(clientId) && it.accountId() == accountId)
+            .filter(it -> it.clientId().equals(clientId) && it.accountId().equals(accountId))
             .toList();
 
         var paginatedPostings = nonPaginatedPostings

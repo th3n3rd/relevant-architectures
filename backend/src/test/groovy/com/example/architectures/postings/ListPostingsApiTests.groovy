@@ -23,7 +23,7 @@ class ListPostingsApiTests extends Specification {
 
     private static final anyConsultantId = 456
     private static final anyClientId = new ClientId(123)
-    private static final anyAccountId = 789
+    private static final anyAccountId = new AccountId(789)
 
     @Autowired
     private MockMvc client
@@ -42,8 +42,8 @@ class ListPostingsApiTests extends Specification {
     def "lists postings for a given client and account"() {
         given:
         def anotherClientId = new ClientId(135)
-        def klarna = 789
-        def amazon = 792
+        def klarna = new AccountId(789)
+        def amazon = new AccountId(792)
         authorisations.authorise(anyConsultantId, anyClientId)
         postings.saveAll([
             new Posting(anyClientId, klarna, new BigDecimal("120.0"), "GBP"),
@@ -54,7 +54,7 @@ class ListPostingsApiTests extends Specification {
 
         when:
         def result = client.perform(
-            get("/clients/{clientId}/accounts/{accountId}/postings", anyClientId.value(), klarna)
+            get("/clients/{clientId}/accounts/{accountId}/postings", anyClientId.value(), klarna.value())
                 .with(validTokenForSpring(anyConsultantId))
         )
 
@@ -65,7 +65,7 @@ class ListPostingsApiTests extends Specification {
             "postings": [
                 {
                     "clientId": $anyClientId.value,
-                    "accountId": $klarna,
+                    "accountId": $klarna.value,
                     "amount": "120.0",
                     "currency": "GBP"
                 }
@@ -85,7 +85,7 @@ class ListPostingsApiTests extends Specification {
 
         when:
         def result = client.perform(
-            get("/clients/{clientId}/accounts/{accountId}/postings", anyClientId.value(), anyAccountId)
+            get("/clients/{clientId}/accounts/{accountId}/postings", anyClientId.value(), anyAccountId.value())
                 .queryParam("page", "1")
                 .queryParam("size", "1")
                 .with(validTokenForSpring(anyConsultantId))
@@ -98,7 +98,7 @@ class ListPostingsApiTests extends Specification {
             "postings": [
                 {
                     "clientId": $anyClientId.value,
-                    "accountId": $anyAccountId,
+                    "accountId": $anyAccountId.value,
                     "amount": "70.0",
                     "currency": "EUR"
                 }
@@ -116,7 +116,7 @@ class ListPostingsApiTests extends Specification {
     def "fails when not authenticated"() {
         when:
         def result = client.perform(
-            get("/clients/{clientId}/accounts/{accountId}/postings", anyClientId.value(), anyAccountId)
+            get("/clients/{clientId}/accounts/{accountId}/postings", anyClientId.value(), anyAccountId.value())
         )
 
         then:
@@ -126,7 +126,7 @@ class ListPostingsApiTests extends Specification {
     def "fails when not authorised to manage the given client"() {
         when:
         def result = client.perform(
-            get("/clients/{clientId}/accounts/{accountId}/postings", anyClientId.value(), anyAccountId)
+            get("/clients/{clientId}/accounts/{accountId}/postings", anyClientId.value(), anyAccountId.value())
                 .with(validTokenForSpring(anyConsultantId))
         )
 

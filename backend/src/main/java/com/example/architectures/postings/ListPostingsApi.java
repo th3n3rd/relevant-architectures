@@ -19,7 +19,7 @@ class ListPostingsApi {
     @GetMapping("/clients/{clientId}/accounts/{accountId}/postings")
     PaginatedPostingList handle(
         @PathVariable ClientId clientId,
-        @PathVariable int accountId,
+        @PathVariable AccountId accountId,
         Pageable page
     ) {
         var paginatedPostings = postings.findAllByClientIdAndAccountId(clientId, accountId, page);
@@ -44,5 +44,5 @@ class ListPostingsApi {
 
     record PaginatedPostingList(List<Posting> postings, Metadata metadata) {}
     record Metadata(int pageNumber, int pageSize, int totalPages, long totalElements) {}
-    record Posting(ClientId clientId, int accountId, String amount, String currency) {}
+    record Posting(ClientId clientId, AccountId accountId, String amount, String currency) {}
 }

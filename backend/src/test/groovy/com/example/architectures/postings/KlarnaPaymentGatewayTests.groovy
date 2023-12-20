@@ -12,7 +12,7 @@ class KlarnaPaymentGatewayTests extends Specification {
 
     static private server = new KlarnaServer()
     static final anyClientId = new ClientId(123)
-    static final anyAccountId = 789
+    static final anyAccountId = new AccountId(789)
 
     @Autowired
     private PaymentGateway transactionsGateway

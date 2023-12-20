@@ -1,6 +1,7 @@
 package com.example.architectures
 
 import com.example.architectures.common.AuthServer
+import com.example.architectures.postings.AccountId
 import com.example.architectures.postings.ClientId
 import com.example.architectures.postings.InMemoryAuthorisations
 import com.example.architectures.postings.KlarnaServer
@@ -22,7 +23,7 @@ class JourneyTests extends Specification {
     static private authServer = new AuthServer()
     static final consultantId = 456
     static final clientId = new ClientId(123)
-    static final klarnaAccount = 789
+    static final klarnaAccount = new AccountId(789)
 
     @Autowired
     private TestRestTemplate httpClient
@@ -53,8 +54,8 @@ class JourneyTests extends Specification {
 
         expect:
         consultant.receivedPostings(clientId, klarnaAccount, [
-            [clientId: clientId.value(), accountId: klarnaAccount, amount: "10.0", currency: "EUR"],
-            [clientId: clientId.value(), accountId: klarnaAccount, amount: "15.0", currency: "EUR"],
+            [clientId: clientId.value(), accountId: klarnaAccount.value(), amount: "10.0", currency: "EUR"],
+            [clientId: clientId.value(), accountId: klarnaAccount.value(), amount: "15.0", currency: "EUR"],
         ])
     }
 

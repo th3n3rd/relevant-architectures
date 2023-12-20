@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 
 public record Transaction(
     ClientId clientId,
-    int accountId,
+    AccountId accountId,
     BigDecimal amount,
     String currency
 ) {}
