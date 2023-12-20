@@ -19,9 +19,11 @@ class SetupAccountApi {
     @ConsultantAuthorised
     @PostMapping("/clients/{clientId}/accounts")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    void handle(@PathVariable ClientId clientId, @RequestBody Account account) {
+    void handle(@PathVariable ClientId clientId, @RequestBody Request.Account account) {
         setupAccount.handle(clientId, account.accountId());
     }
 
-    record Account(AccountId accountId) {}
+    static class Request {
+        record Account(AccountId accountId) {}
+    }
 }

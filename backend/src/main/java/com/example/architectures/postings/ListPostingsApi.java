@@ -17,23 +17,23 @@ class ListPostingsApi {
 
     @ConsultantAuthorised
     @GetMapping("/clients/{clientId}/accounts/{accountId}/postings")
-    PaginatedPostingList handle(
+    Response.PaginatedPostings handle(
         @PathVariable ClientId clientId,
         @PathVariable AccountId accountId,
         Pageable page
     ) {
         var paginatedPostings = postings.findAllByClientIdAndAccountId(clientId, accountId, page);
-        return new PaginatedPostingList(
+        return new Response.PaginatedPostings(
             paginatedPostings
                 .stream()
-                .map(it -> new Posting(
+                .map(it -> new Response.Posting(
                     it.clientId(),
                     it.accountId(),
                     it.amount().toString(),
                     it.currency())
                 )
                 .toList(),
-            new Metadata(
+            new Response.Metadata(
                 paginatedPostings.getNumber(),
                 paginatedPostings.getSize(),
                 paginatedPostings.getTotalPages(),
@@ -42,7 +42,9 @@ class ListPostingsApi {
         );
     }
 
-    record PaginatedPostingList(List<Posting> postings, Metadata metadata) {}
-    record Metadata(int pageNumber, int pageSize, int totalPages, long totalElements) {}
-    record Posting(ClientId clientId, AccountId accountId, String amount, String currency) {}
+    static class Response {
+        record PaginatedPostings(List<Posting> postings, Metadata metadata) {}
+        record Metadata(int pageNumber, int pageSize, int totalPages, long totalElements) {}
+        record Posting(ClientId clientId, AccountId accountId, String amount, String currency) {}
+    }
 }
