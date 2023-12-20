@@ -3,21 +3,22 @@ package com.example.architectures
 import com.example.architectures.common.AuthServer
 import com.example.architectures.postings.AccountId
 import com.example.architectures.postings.ClientId
+import com.example.architectures.postings.ConsultantId
 import org.springframework.boot.test.web.client.TestRestTemplate
 import org.springframework.http.RequestEntity
 
 class TaxConsultant {
     private final TestRestTemplate httpClient
-    private final int consultantId
+    private final ConsultantId consultantId
     private String authenticationToken
 
-    TaxConsultant(TestRestTemplate httpClient, int consultantId) {
+    TaxConsultant(TestRestTemplate httpClient, ConsultantId consultantId) {
         this.httpClient = httpClient
         this.consultantId = consultantId
     }
 
     def authenticateOn(AuthServer server) {
-        this.authenticationToken = server.validToken(consultantId);
+        this.authenticationToken = server.validBearerToken(consultantId)
     }
 
     def setupAccount(ClientId clientId, AccountId accountId) {

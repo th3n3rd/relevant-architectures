@@ -3,6 +3,7 @@ package com.example.architectures
 import com.example.architectures.common.AuthServer
 import com.example.architectures.postings.AccountId
 import com.example.architectures.postings.ClientId
+import com.example.architectures.postings.ConsultantId
 import com.example.architectures.postings.InMemoryAuthorisations
 import com.example.architectures.postings.KlarnaServer
 import org.springframework.beans.factory.annotation.Autowired
@@ -14,14 +15,12 @@ import spock.lang.Specification
 
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT
 
-@SpringBootTest(
-    webEnvironment = RANDOM_PORT
-)
+@SpringBootTest(webEnvironment = RANDOM_PORT)
 class JourneyTests extends Specification {
 
     static private klarnaServer = new KlarnaServer()
     static private authServer = new AuthServer()
-    static final consultantId = 456
+    static final consultantId = new ConsultantId(456)
     static final clientId = new ClientId(123)
     static final klarnaAccount = new AccountId(789)
 

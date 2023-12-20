@@ -1,7 +1,5 @@
 package com.example.architectures.common;
 
-import static org.springframework.security.config.Customizer.withDefaults;
-
 import org.springframework.boot.actuate.autoconfigure.security.servlet.EndpointRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -26,7 +24,9 @@ public class WebSecurityConfig {
         return http
             .authorizeHttpRequests(config -> config.anyRequest().authenticated())
             .csrf(config -> config.disable())
-            .oauth2ResourceServer(config -> config.jwt(withDefaults()))
+            .oauth2ResourceServer(config -> config.jwt(
+                jwt -> jwt.jwtAuthenticationConverter(ConsultantAuthToken::new)
+            ))
             .build();
     }
 }

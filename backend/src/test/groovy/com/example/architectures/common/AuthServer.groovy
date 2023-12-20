@@ -1,12 +1,6 @@
 package com.example.architectures.common
 
-import com.nimbusds.jose.JWSAlgorithm
-import com.nimbusds.jose.JWSHeader
-import com.nimbusds.jose.crypto.RSASSASigner
-import com.nimbusds.jose.jwk.KeyUse
-import com.nimbusds.jose.jwk.gen.RSAKeyGenerator
-import com.nimbusds.jwt.JWTClaimsSet
-import com.nimbusds.jwt.SignedJWT
+import com.example.architectures.postings.ConsultantId
 import org.mockserver.configuration.Configuration
 import org.mockserver.model.HttpRequest
 import org.mockserver.model.HttpResponse
@@ -14,13 +8,9 @@ import org.mockserver.model.JsonBody
 import org.slf4j.event.Level
 
 import static org.mockserver.integration.ClientAndServer.startClientAndServer
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.jwt
 
 class AuthServer {
-    private jwk = new RSAKeyGenerator(2048)
-        .keyUse(KeyUse.SIGNATURE)
-        .keyID(UUID.randomUUID().toString())
-        .generate()
+    private jwk = Auth.generateSigningKey()
 
     private configuration = Configuration
         .configuration()
@@ -61,27 +51,7 @@ class AuthServer {
         return "http://localhost:$server.localPort$path" as String
     }
 
-    def validToken(int consultantId) {
-        def signer = new RSASSASigner(jwk);
-
-        def token = new SignedJWT(
-            new JWSHeader.Builder(JWSAlgorithm.RS256)
-                .keyID(jwk.getKeyID())
-                .build(),
-            new JWTClaimsSet.Builder()
-                .subject("alice")
-                .claim("consultantId", consultantId)
-                .issuer(url())
-                .expirationTime(new Date(new Date().getTime() + 60 * 1000))
-                .build()
-        )
-
-        token.sign(signer)
-
-        return token.serialize()
-    }
-
-    static validTokenForSpring(int consultantId) {
-        return jwt().jwt({ it.claim("consultantId", consultantId)})
+    def validBearerToken(ConsultantId consultantId) {
+        return Auth.validToken(consultantId, url(), jwk).serialize()
     }
 }

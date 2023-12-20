@@ -8,7 +8,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.test.web.servlet.MockMvc
 import spock.lang.Specification
 
-import static com.example.architectures.common.AuthServer.validTokenForSpring
+import static com.example.architectures.common.Auth.authenticatedConsultant
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
@@ -22,9 +22,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureJson
 class SetupAccountApiTests extends Specification {
 
+    private static final anyConsultantId = new ConsultantId(456)
     private static final anyClientId = new ClientId(123)
     private static final anyAccountId = new AccountId(789)
-    private static final anyConsultantId = 456
 
     @Autowired
     private MockMvc client
@@ -46,7 +46,7 @@ class SetupAccountApiTests extends Specification {
         when:
         def result = client.perform(
             post("/clients/{clientId}/accounts", anyClientId.value())
-                .with(validTokenForSpring(anyConsultantId))
+                .with(authenticatedConsultant(anyConsultantId))
                 .contentType("application/json")
                 .content("""
                 {
@@ -82,7 +82,7 @@ class SetupAccountApiTests extends Specification {
         when:
         def result = client.perform(
             post("/clients/{clientId}/accounts", anyClientId.value())
-                .with(validTokenForSpring(anyConsultantId))
+                .with(authenticatedConsultant(anyConsultantId))
                 .contentType("application/json")
                 .content("""
                 {

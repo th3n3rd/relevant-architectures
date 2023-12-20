@@ -7,7 +7,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.test.web.servlet.MockMvc
 import spock.lang.Specification
 
-import static com.example.architectures.common.AuthServer.validTokenForSpring
+import static com.example.architectures.common.Auth.authenticatedConsultant
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
@@ -21,7 +21,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureJson
 class ListPostingsApiTests extends Specification {
 
-    private static final anyConsultantId = 456
+    private static final anyConsultantId = new ConsultantId(456)
     private static final anyClientId = new ClientId(123)
     private static final anyAccountId = new AccountId(789)
 
@@ -55,7 +55,7 @@ class ListPostingsApiTests extends Specification {
         when:
         def result = client.perform(
             get("/clients/{clientId}/accounts/{accountId}/postings", anyClientId.value(), klarna.value())
-                .with(validTokenForSpring(anyConsultantId))
+                .with(authenticatedConsultant(anyConsultantId))
         )
 
         then:
@@ -88,7 +88,7 @@ class ListPostingsApiTests extends Specification {
             get("/clients/{clientId}/accounts/{accountId}/postings", anyClientId.value(), anyAccountId.value())
                 .queryParam("page", "1")
                 .queryParam("size", "1")
-                .with(validTokenForSpring(anyConsultantId))
+                .with(authenticatedConsultant(anyConsultantId))
         )
 
         then:
@@ -127,7 +127,7 @@ class ListPostingsApiTests extends Specification {
         when:
         def result = client.perform(
             get("/clients/{clientId}/accounts/{accountId}/postings", anyClientId.value(), anyAccountId.value())
-                .with(validTokenForSpring(anyConsultantId))
+                .with(authenticatedConsultant(anyConsultantId))
         )
 
         then:
