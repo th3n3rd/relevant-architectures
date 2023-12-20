@@ -24,7 +24,7 @@ class KlarnaPaymentGateway implements PaymentGateway {
     }
 
     @Override
-    public List<Transaction> fetchTransactions(int clientId, int accountId) {
+    public List<Transaction> fetchTransactions(ClientId clientId, int accountId) {
         var consent = requestConsent(accountId);
         if (consent.isRejected()) {
             throw new FetchTransactionsFailed.Unauthorised();

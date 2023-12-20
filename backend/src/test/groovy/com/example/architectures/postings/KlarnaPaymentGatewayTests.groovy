@@ -11,7 +11,7 @@ import spock.lang.Specification
 class KlarnaPaymentGatewayTests extends Specification {
 
     static private server = new KlarnaServer()
-    static final anyClientId = 123
+    static final anyClientId = new ClientId(123)
     static final anyAccountId = 789
 
     @Autowired

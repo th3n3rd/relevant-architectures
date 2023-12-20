@@ -5,7 +5,7 @@ import spock.lang.Specification
 
 class SetupAccountTests extends Specification {
 
-    private static final amyClientId = 123
+    private static final amyClientId = new ClientId(123)
     private static final anyAccountId = 789
 
     def eventPublisher = new InMemoryEventPublisher()

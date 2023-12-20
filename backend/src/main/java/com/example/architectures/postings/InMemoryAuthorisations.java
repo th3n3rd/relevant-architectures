@@ -9,14 +9,12 @@ public class InMemoryAuthorisations implements Authorisations {
     private final List<Authorisation> authorisations = new ArrayList<>();
 
     @Override
-    public boolean existsByConsultantIdAndClientId(int consultantId, int clientId) {
-        return authorisations
-            .stream()
-            .anyMatch(it -> it.consultantId() == consultantId && it.clientId() == clientId);
+    public boolean existsByConsultantIdAndClientId(int consultantId, ClientId clientId) {
+        return authorisations.contains(new Authorisation(consultantId, clientId));
     }
 
-    public void authorise(int consultantId, int clientID) {
-        authorisations.add(new Authorisation(consultantId, clientID));
+    public void authorise(int consultantId, ClientId clientId) {
+        authorisations.add(new Authorisation(consultantId, clientId));
     }
 
     public void deleteAll() {

@@ -19,7 +19,7 @@ class SetupAccountApi {
     @ConsultantAuthorised
     @PostMapping("/clients/{clientId}/accounts")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    void handle(@PathVariable int clientId, @RequestBody Account account) {
+    void handle(@PathVariable ClientId clientId, @RequestBody Account account) {
         setupAccount.handle(clientId, account.accountId());
     }
 

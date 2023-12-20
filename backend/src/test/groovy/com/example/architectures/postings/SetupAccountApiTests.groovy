@@ -20,7 +20,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 ])
 class SetupAccountApiTests extends Specification {
 
-    private static final anyClientId = 123
+    private static final anyClientId = new ClientId(123)
     private static final anyAccountId = 789
     private static final anyConsultantId = 456
 
@@ -43,7 +43,7 @@ class SetupAccountApiTests extends Specification {
 
         when:
         def result = client.perform(
-            post("/clients/{clientId}/accounts", anyClientId)
+            post("/clients/{clientId}/accounts", anyClientId.value())
                 .with(validTokenForSpring(anyConsultantId))
                 .contentType("application/json")
                 .content("""
@@ -63,7 +63,7 @@ class SetupAccountApiTests extends Specification {
     def "fails when not authenticated"() {
         when:
         def result = client.perform(
-            post("/clients/{clientId}/accounts", anyClientId)
+            post("/clients/{clientId}/accounts", anyClientId.value())
                 .contentType("application/json")
                 .content("""
                 {
@@ -79,7 +79,7 @@ class SetupAccountApiTests extends Specification {
     def "fails when not authorised to manage the given client"() {
         when:
         def result = client.perform(
-            post("/clients/{clientId}/accounts", anyClientId)
+            post("/clients/{clientId}/accounts", anyClientId.value())
                 .with(validTokenForSpring(anyConsultantId))
                 .contentType("application/json")
                 .content("""

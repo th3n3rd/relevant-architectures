@@ -4,7 +4,7 @@ import spock.lang.Specification
 
 class GeneratePostingsTests extends Specification {
 
-    private static final anyClientId = 123
+    private static final anyClientId = new ClientId(123)
     private static final anyAccountId = 789
 
     def transactionsGateway = Mock(PaymentGateway)

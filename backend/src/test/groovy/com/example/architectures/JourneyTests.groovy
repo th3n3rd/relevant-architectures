@@ -1,6 +1,7 @@
 package com.example.architectures
 
 import com.example.architectures.common.AuthServer
+import com.example.architectures.postings.ClientId
 import com.example.architectures.postings.InMemoryAuthorisations
 import com.example.architectures.postings.KlarnaServer
 import org.springframework.beans.factory.annotation.Autowired
@@ -19,8 +20,8 @@ class JourneyTests extends Specification {
 
     static private klarnaServer = new KlarnaServer()
     static private authServer = new AuthServer()
-    static final clientId = 123
     static final consultantId = 456
+    static final clientId = new ClientId(123)
     static final klarnaAccount = 789
 
     @Autowired
@@ -52,8 +53,8 @@ class JourneyTests extends Specification {
 
         expect:
         consultant.receivedPostings(clientId, klarnaAccount, [
-            [clientId: clientId, accountId: klarnaAccount, amount: "10.0", currency: "EUR"],
-            [clientId: clientId, accountId: klarnaAccount, amount: "15.0", currency: "EUR"],
+            [clientId: clientId.value(), accountId: klarnaAccount, amount: "10.0", currency: "EUR"],
+            [clientId: clientId.value(), accountId: klarnaAccount, amount: "15.0", currency: "EUR"],
         ])
     }
 

@@ -10,6 +10,9 @@ import spock.util.concurrent.PollingConditions
 @SpringBootTest
 class GeneratePostingsTaskTests extends Specification {
 
+    private static anyClientId = new ClientId(123)
+    private static anyAccountId = 789
+
     @Autowired
     private EventPublisher eventPublisher
 
@@ -21,8 +24,6 @@ class GeneratePostingsTaskTests extends Specification {
 
     def "generate postings when a new account is setup"() {
         given:
-        def anyClientId = 123
-        def anyAccountId = 789
         transactionsGateway.fetchTransactions(anyClientId, anyAccountId) >> [
             new Transaction(anyClientId, anyAccountId, new BigDecimal("10.0"), "EUR")
         ]
