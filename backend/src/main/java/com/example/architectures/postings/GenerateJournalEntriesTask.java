@@ -5,17 +5,17 @@ import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
 @Component
-class GeneratePostingsTask {
+class GenerateJournalEntriesTask {
 
-    private final GeneratePostings generatePostings;
+    private final GenerateJournalEntries generateJournalEntries;
 
-    GeneratePostingsTask(GeneratePostings generatePostings) {
-        this.generatePostings = generatePostings;
+    GenerateJournalEntriesTask(GenerateJournalEntries generateJournalEntries) {
+        this.generateJournalEntries = generateJournalEntries;
     }
 
     @DomainEventHandler
     @EventListener
     void on(NewAccountSetup event) {
-        generatePostings.handle(event.clientId(), event.accountId());
+        generateJournalEntries.handle(event.clientId(), event.accountId());
     }
 }

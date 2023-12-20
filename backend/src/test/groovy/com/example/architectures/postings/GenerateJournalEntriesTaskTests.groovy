@@ -8,7 +8,7 @@ import spock.lang.Specification
 import spock.util.concurrent.PollingConditions
 
 @SpringBootTest
-class GeneratePostingsTaskTests extends Specification {
+class GenerateJournalEntriesTaskTests extends Specification {
 
     private static anyClientId = new ClientId(123)
     private static anyAccountId = new AccountId(789)
@@ -17,12 +17,12 @@ class GeneratePostingsTaskTests extends Specification {
     private EventPublisher eventPublisher
 
     @Autowired
-    private InMemoryPostings postings
+    private InMemoryJournal journal
 
     @SpringBean
     private PaymentGateway transactionsGateway = Mock()
 
-    def "generate postings when a new account is setup"() {
+    def "generate journal entries when a new account is setup"() {
         given:
         transactionsGateway.fetchTransactions(anyClientId, anyAccountId) >> [
             new Transaction(anyClientId, anyAccountId, new BigDecimal("10.0"), "EUR")
@@ -33,7 +33,7 @@ class GeneratePostingsTaskTests extends Specification {
 
         then:
         new PollingConditions().within(5) {
-            !postings.findAll().isEmpty()
+            !journal.findAll().isEmpty()
         }
     }
 }

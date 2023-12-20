@@ -2,6 +2,6 @@ package com.example.architectures.postings;
 
 import java.util.List;
 
-interface Postings {
-    void saveAll(List<Posting> postings);
+interface Journal {
+    void saveAll(List<JournalEntry> entries);
 }

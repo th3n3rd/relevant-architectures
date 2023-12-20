@@ -30,14 +30,14 @@ class TaxConsultant {
         assert response.statusCode.is2xxSuccessful()
     }
 
-    void receivedPostings(ClientId clientId, AccountId accountId, expected) {
+    void journalContains(ClientId clientId, expected) {
         def request = RequestEntity
-            .get("/clients/{clientId}/accounts/{accountId}/postings", clientId.value(), accountId.value())
+            .get("/clients/{clientId}/journal", clientId.value())
             .header("Authorization", "Bearer $authenticationToken")
             .build()
-        def response = httpClient.exchange(request, PostingsList)
+        def response = httpClient.exchange(request, JournalEntries)
         assert response.statusCode.is2xxSuccessful()
-        def actual = response.body.postings.collect {
+        def actual = response.body.entries.collect {
             [
                 clientId: it.clientId,
                 accountId: it.accountId,
@@ -48,11 +48,11 @@ class TaxConsultant {
         assert expected == actual
     }
 
-    static class PostingsList {
-        List<Posting> postings
+    static class JournalEntries {
+        List<JournalEntry> entries
     }
 
-    static class Posting {
+    static class JournalEntry {
         int clientId
         int accountId
         String amount

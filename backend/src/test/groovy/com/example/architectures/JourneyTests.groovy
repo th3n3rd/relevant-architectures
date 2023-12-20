@@ -45,14 +45,14 @@ class JourneyTests extends Specification {
         ])
     }
 
-    def "tax consultant receives postings proposal"() {
+    def "tax consultant can inspect entries automatically generated in the journal"() {
         def consultant = new TaxConsultant(httpClient, consultantId)
 
         consultant.authenticateOn(authServer)
         consultant.setupAccount(clientId, klarnaAccount)
 
         expect:
-        consultant.receivedPostings(clientId, klarnaAccount, [
+        consultant.journalContains(clientId, [
             [clientId: clientId.value(), accountId: klarnaAccount.value(), amount: "10.0", currency: "EUR"],
             [clientId: clientId.value(), accountId: klarnaAccount.value(), amount: "15.0", currency: "EUR"],
         ])

@@ -3,6 +3,6 @@ package com.example.architectures.postings;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-interface PaginatedPostings {
-    Page<Posting> findAllByClientIdAndAccountId(ClientId clientId, AccountId accountId, Pageable page);
+interface PaginatedJournal {
+    Page<JournalEntry> findAllByClientId(ClientId clientId, Pageable page);
 }

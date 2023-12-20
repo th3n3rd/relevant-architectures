@@ -13,13 +13,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
 @WebMvcTest([
-    ListPostingsApi,
-    InMemoryPostings,
+    ListJournalEntriesApi,
+    InMemoryJournal,
     InMemoryAuthorisations,
     WebSecurityConfig
 ])
 @AutoConfigureJson
-class ListPostingsApiTests extends Specification {
+class ListJournalEntriesApiTests extends Specification {
 
     private static final anyConsultantId = new ConsultantId(456)
     private static final anyClientId = new ClientId(123)
@@ -29,32 +29,32 @@ class ListPostingsApiTests extends Specification {
     private MockMvc client
 
     @Autowired
-    private InMemoryPostings postings
+    private InMemoryJournal journal
 
     @Autowired
     private InMemoryAuthorisations authorisations
 
     void setup() {
         authorisations.deleteAll()
-        postings.deleteAll()
+        journal.deleteAll()
     }
 
-    def "lists postings for a given client and account"() {
+    def "lists journal entries for a given client"() {
         given:
         def anotherClientId = new ClientId(135)
         def klarna = new AccountId(789)
         def amazon = new AccountId(792)
         authorisations.authorise(anyConsultantId, anyClientId)
-        postings.saveAll([
-            new Posting(anyClientId, klarna, new BigDecimal("120.0"), "GBP"),
-            new Posting(anotherClientId, amazon, new BigDecimal("80.0"), "EUR"),
-            new Posting(anyClientId, amazon, new BigDecimal("30.0"), "EUR"),
-            new Posting(anotherClientId, klarna, new BigDecimal("50.0"), "GBP"),
+        journal.saveAll([
+            new JournalEntry(anyClientId, klarna, new BigDecimal("120.0"), "GBP"),
+            new JournalEntry(anotherClientId, amazon, new BigDecimal("80.0"), "EUR"),
+            new JournalEntry(anyClientId, amazon, new BigDecimal("30.0"), "EUR"),
+            new JournalEntry(anotherClientId, klarna, new BigDecimal("50.0"), "GBP"),
         ])
 
         when:
         def result = client.perform(
-            get("/clients/{clientId}/accounts/{accountId}/postings", anyClientId.value(), klarna.value())
+            get("/clients/{clientId}/journal", anyClientId.value())
                 .with(authenticatedConsultant(anyConsultantId))
         )
 
@@ -62,30 +62,36 @@ class ListPostingsApiTests extends Specification {
         result.andExpect(status().isOk())
         result.andExpect(content().json("""
         {
-            "postings": [
+            "entries": [
                 {
                     "clientId": $anyClientId.value,
                     "accountId": $klarna.value,
                     "amount": "120.0",
                     "currency": "GBP"
+                },
+                {
+                    "clientId": $anyClientId.value,
+                    "accountId": $amazon.value,
+                    "amount": "30.0",
+                    "currency": "EUR"
                 }
             ]
         }
         """))
     }
 
-    def "paginate postings for a given client and account"() {
+    def "paginate journal entries for a given client"() {
         given:
         authorisations.authorise(anyConsultantId, anyClientId)
-        postings.saveAll([
-            new Posting(anyClientId, anyAccountId, new BigDecimal("45.0"), "GBP"),
-            new Posting(anyClientId, anyAccountId, new BigDecimal("70.0"), "EUR"),
-            new Posting(anyClientId, anyAccountId, new BigDecimal("15.0"), "GPB"),
+        journal.saveAll([
+            new JournalEntry(anyClientId, anyAccountId, new BigDecimal("45.0"), "GBP"),
+            new JournalEntry(anyClientId, anyAccountId, new BigDecimal("70.0"), "EUR"),
+            new JournalEntry(anyClientId, anyAccountId, new BigDecimal("15.0"), "GPB"),
         ])
 
         when:
         def result = client.perform(
-            get("/clients/{clientId}/accounts/{accountId}/postings", anyClientId.value(), anyAccountId.value())
+            get("/clients/{clientId}/journal", anyClientId.value())
                 .queryParam("page", "1")
                 .queryParam("size", "1")
                 .with(authenticatedConsultant(anyConsultantId))
@@ -95,7 +101,7 @@ class ListPostingsApiTests extends Specification {
         result.andExpect(status().isOk())
         result.andExpect(content().json("""
         {
-            "postings": [
+            "entries": [
                 {
                     "clientId": $anyClientId.value,
                     "accountId": $anyAccountId.value,
@@ -116,7 +122,7 @@ class ListPostingsApiTests extends Specification {
     def "fails when not authenticated"() {
         when:
         def result = client.perform(
-            get("/clients/{clientId}/accounts/{accountId}/postings", anyClientId.value(), anyAccountId.value())
+            get("/clients/{clientId}/journal", anyClientId.value())
         )
 
         then:
@@ -126,7 +132,7 @@ class ListPostingsApiTests extends Specification {
     def "fails when not authorised to manage the given client"() {
         when:
         def result = client.perform(
-            get("/clients/{clientId}/accounts/{accountId}/postings", anyClientId.value(), anyAccountId.value())
+            get("/clients/{clientId}/journal", anyClientId.value())
                 .with(authenticatedConsultant(anyConsultantId))
         )
 
