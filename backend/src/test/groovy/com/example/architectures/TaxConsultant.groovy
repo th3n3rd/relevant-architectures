@@ -54,7 +54,7 @@ class TaxConsultant {
 
     static class JournalEntry {
         int clientId
-        int accountId
+        String accountId
         String amount
         String currency
     }

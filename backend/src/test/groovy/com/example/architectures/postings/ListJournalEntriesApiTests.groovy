@@ -23,7 +23,7 @@ class ListJournalEntriesApiTests extends Specification {
 
     private static final anyConsultantId = new ConsultantId(456)
     private static final anyClientId = new ClientId(123)
-    private static final anyAccountId = new AccountId(789)
+    private static final anyAccountId = new AccountId("789")
 
     @Autowired
     private MockMvc client
@@ -42,8 +42,8 @@ class ListJournalEntriesApiTests extends Specification {
     def "lists journal entries for a given client"() {
         given:
         def anotherClientId = new ClientId(135)
-        def klarna = new AccountId(789)
-        def amazon = new AccountId(792)
+        def klarna = new AccountId("789")
+        def amazon = new AccountId("792")
         authorisations.authorise(anyConsultantId, anyClientId)
         journal.saveAll([
             new JournalEntry(anyClientId, klarna, new BigDecimal("120.0"), "GBP"),
@@ -65,13 +65,13 @@ class ListJournalEntriesApiTests extends Specification {
             "entries": [
                 {
                     "clientId": $anyClientId.value,
-                    "accountId": $klarna.value,
+                    "accountId": "$klarna.value",
                     "amount": "120.0",
                     "currency": "GBP"
                 },
                 {
                     "clientId": $anyClientId.value,
-                    "accountId": $amazon.value,
+                    "accountId": "$amazon.value",
                     "amount": "30.0",
                     "currency": "EUR"
                 }
@@ -104,7 +104,7 @@ class ListJournalEntriesApiTests extends Specification {
             "entries": [
                 {
                     "clientId": $anyClientId.value,
-                    "accountId": $anyAccountId.value,
+                    "accountId": "$anyAccountId.value",
                     "amount": "70.0",
                     "currency": "EUR"
                 }

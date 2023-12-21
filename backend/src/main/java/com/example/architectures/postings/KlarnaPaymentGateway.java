@@ -66,7 +66,7 @@ class KlarnaPaymentGateway implements PaymentGateway {
     record Properties(String uri) {}
 
     private static class Klarna {
-        record RequestConsent(int clientId) {}
+        record RequestConsent(String clientId) {}
         record Consent(String status, @JsonProperty("consent_id") String consentId) {
             boolean isRejected() {
                 return "REJECTED".equals(status);

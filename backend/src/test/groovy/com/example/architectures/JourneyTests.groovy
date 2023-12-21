@@ -22,7 +22,7 @@ class JourneyTests extends Specification {
     static private authServer = new AuthServer()
     static final consultantId = new ConsultantId(456)
     static final clientId = new ClientId(123)
-    static final klarnaAccount = new AccountId(789)
+    static final klarnaAccount = new AccountId("789")
 
     @Autowired
     private TestRestTemplate httpClient

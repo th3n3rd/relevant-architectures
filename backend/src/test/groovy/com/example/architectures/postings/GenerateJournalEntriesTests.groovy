@@ -5,7 +5,7 @@ import spock.lang.Specification
 class GenerateJournalEntriesTests extends Specification {
 
     private static final anyClientId = new ClientId(123)
-    private static final anyAccountId = new AccountId(789)
+    private static final anyAccountId = new AccountId("789")
 
     def transactionsGateway = Mock(PaymentGateway)
     def journal = new InMemoryJournal()

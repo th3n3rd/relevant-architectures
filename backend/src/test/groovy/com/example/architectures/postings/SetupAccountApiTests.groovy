@@ -24,7 +24,7 @@ class SetupAccountApiTests extends Specification {
 
     private static final anyConsultantId = new ConsultantId(456)
     private static final anyClientId = new ClientId(123)
-    private static final anyAccountId = new AccountId(789)
+    private static final anyAccountId = new AccountId("789")
 
     @Autowired
     private MockMvc client
