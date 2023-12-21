@@ -40,8 +40,8 @@ class JourneyTests extends Specification {
         authorisations.authorise(consultantId, clientId)
         klarnaServer.givenConsentIsApproved()
         klarnaServer.givenExistingTransactions(klarnaAccount, [
-            [id: UUID.randomUUID(), amount: [ amount: "10.0", currency: "EUR"]],
-            [id: UUID.randomUUID(), amount: [ amount: "15.0", currency: "EUR"]],
+            [id: klarnaServer.anyTransactionId(), amount: [amount: "10.0", currency: "EUR"]],
+            [id: klarnaServer.anyTransactionId(), amount: [amount: "15.0", currency: "EUR"]],
         ])
     }
 

@@ -26,6 +26,10 @@ class KlarnaServer {
         return "http://localhost:$server.localPort"
     }
 
+    def anyTransactionId() {
+        return UUID.randomUUID()
+    }
+
     def givenExistingTransactions(AccountId accountId, transactions) {
         server
             .when(HttpRequest.request()
