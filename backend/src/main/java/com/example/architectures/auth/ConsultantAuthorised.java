@@ -1,4 +1,4 @@
-package com.example.architectures.postings;
+package com.example.architectures.auth;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;

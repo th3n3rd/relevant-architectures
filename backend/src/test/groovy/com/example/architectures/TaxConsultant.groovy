@@ -1,6 +1,6 @@
 package com.example.architectures
 
-import com.example.architectures.common.AuthServer
+import com.example.architectures.auth.AuthServer
 import com.example.architectures.ecommerce.AccountId
 import com.example.architectures.postings.ClientId
 import com.example.architectures.postings.ConsultantId

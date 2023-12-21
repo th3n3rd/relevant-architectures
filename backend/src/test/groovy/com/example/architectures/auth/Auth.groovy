@@ -1,5 +1,6 @@
-package com.example.architectures.common
+package com.example.architectures.auth
 
+import com.example.architectures.common.ConsultantAuthToken
 import com.example.architectures.postings.ConsultantId
 import com.nimbusds.jose.JWSAlgorithm
 import com.nimbusds.jose.JWSHeader

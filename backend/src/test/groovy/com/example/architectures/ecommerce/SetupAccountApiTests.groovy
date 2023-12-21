@@ -1,17 +1,17 @@
 package com.example.architectures.ecommerce
 
+import com.example.architectures.auth.InMemoryAuthorisations
 import com.example.architectures.common.InMemoryEventPublisher
 import com.example.architectures.common.WebSecurityConfig
 import com.example.architectures.postings.ClientId
 import com.example.architectures.postings.ConsultantId
-import com.example.architectures.postings.InMemoryAuthorisations
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.json.AutoConfigureJson
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.test.web.servlet.MockMvc
 import spock.lang.Specification
 
-import static com.example.architectures.common.Auth.authenticatedConsultant
+import static com.example.architectures.auth.Auth.authenticatedConsultant
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 

@@ -1,4 +1,4 @@
-package com.example.architectures.common
+package com.example.architectures.auth
 
 import com.example.architectures.postings.ConsultantId
 import org.mockserver.configuration.Configuration

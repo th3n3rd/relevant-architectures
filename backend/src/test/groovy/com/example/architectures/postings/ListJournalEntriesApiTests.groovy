@@ -1,5 +1,6 @@
 package com.example.architectures.postings
 
+import com.example.architectures.auth.InMemoryAuthorisations
 import com.example.architectures.common.WebSecurityConfig
 import com.example.architectures.ecommerce.AccountId
 import org.springframework.beans.factory.annotation.Autowired
@@ -8,7 +9,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.test.web.servlet.MockMvc
 import spock.lang.Specification
 
-import static com.example.architectures.common.Auth.authenticatedConsultant
+import static com.example.architectures.auth.Auth.authenticatedConsultant
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
