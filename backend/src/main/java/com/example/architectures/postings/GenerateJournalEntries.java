@@ -1,5 +1,7 @@
 package com.example.architectures.postings;
 
+import com.example.architectures.ecommerce.AccountId;
+import com.example.architectures.ecommerce.PaymentGateway;
 import org.springframework.stereotype.Component;
 
 @Component

@@ -1,5 +1,6 @@
 package com.example.architectures.postings;
 
+import com.example.architectures.ecommerce.AccountId;
 import java.util.List;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.GetMapping;

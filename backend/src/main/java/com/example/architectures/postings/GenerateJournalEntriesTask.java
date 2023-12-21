@@ -1,5 +1,6 @@
 package com.example.architectures.postings;
 
+import com.example.architectures.ecommerce.NewAccountSetup;
 import org.jmolecules.event.annotation.DomainEventHandler;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;

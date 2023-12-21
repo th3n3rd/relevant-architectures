@@ -1,6 +1,7 @@
-package com.example.architectures.postings
+package com.example.architectures.ecommerce
 
 
+import com.example.architectures.postings.ClientId
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.DynamicPropertyRegistry

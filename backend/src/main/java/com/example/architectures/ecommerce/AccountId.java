@@ -1,4 +1,4 @@
-package com.example.architectures.postings;
+package com.example.architectures.ecommerce;
 
 import org.jmolecules.ddd.types.Identifier;
 

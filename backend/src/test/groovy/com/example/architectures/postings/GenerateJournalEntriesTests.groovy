@@ -1,5 +1,8 @@
 package com.example.architectures.postings
 
+import com.example.architectures.ecommerce.AccountId
+import com.example.architectures.ecommerce.PaymentGateway
+import com.example.architectures.ecommerce.Transaction
 import spock.lang.Specification
 
 class GenerateJournalEntriesTests extends Specification {

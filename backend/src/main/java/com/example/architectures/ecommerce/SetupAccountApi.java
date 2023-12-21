@@ -1,5 +1,7 @@
-package com.example.architectures.postings;
+package com.example.architectures.ecommerce;
 
+import com.example.architectures.postings.ClientId;
+import com.example.architectures.postings.ConsultantAuthorised;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;

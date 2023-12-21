@@ -11,4 +11,4 @@ import org.springframework.security.access.prepost.PreAuthorize;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @PreAuthorize("@authorisations.existsByConsultantIdAndClientId(principal, #clientId)")
-@interface ConsultantAuthorised {}
+public @interface ConsultantAuthorised {}

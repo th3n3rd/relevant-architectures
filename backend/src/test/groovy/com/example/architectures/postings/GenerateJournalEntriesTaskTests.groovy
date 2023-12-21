@@ -1,6 +1,10 @@
 package com.example.architectures.postings
 
 import com.example.architectures.common.EventPublisher
+import com.example.architectures.ecommerce.AccountId
+import com.example.architectures.ecommerce.NewAccountSetup
+import com.example.architectures.ecommerce.PaymentGateway
+import com.example.architectures.ecommerce.Transaction
 import org.spockframework.spring.SpringBean
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest

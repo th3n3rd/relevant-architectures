@@ -1,4 +1,5 @@
-package com.example.architectures.postings
+package com.example.architectures.ecommerce
+
 
 import org.mockserver.configuration.Configuration
 import org.mockserver.model.HttpRequest

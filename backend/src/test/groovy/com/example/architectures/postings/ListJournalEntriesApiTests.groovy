@@ -1,6 +1,7 @@
 package com.example.architectures.postings
 
 import com.example.architectures.common.WebSecurityConfig
+import com.example.architectures.ecommerce.AccountId
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.json.AutoConfigureJson
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest

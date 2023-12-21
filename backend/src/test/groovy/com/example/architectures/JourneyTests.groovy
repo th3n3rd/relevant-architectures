@@ -1,11 +1,11 @@
 package com.example.architectures
 
 import com.example.architectures.common.AuthServer
-import com.example.architectures.postings.AccountId
+import com.example.architectures.ecommerce.AccountId
+import com.example.architectures.ecommerce.KlarnaServer
 import com.example.architectures.postings.ClientId
 import com.example.architectures.postings.ConsultantId
 import com.example.architectures.postings.InMemoryAuthorisations
-import com.example.architectures.postings.KlarnaServer
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.web.client.TestRestTemplate

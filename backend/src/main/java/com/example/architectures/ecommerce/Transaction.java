@@ -1,5 +1,6 @@
-package com.example.architectures.postings;
+package com.example.architectures.ecommerce;
 
+import com.example.architectures.postings.ClientId;
 import java.math.BigDecimal;
 
 public record Transaction(

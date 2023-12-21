@@ -1,5 +1,6 @@
 package com.example.architectures.postings;
 
+import com.example.architectures.ecommerce.AccountId;
 import java.math.BigDecimal;
 
 record JournalEntry(

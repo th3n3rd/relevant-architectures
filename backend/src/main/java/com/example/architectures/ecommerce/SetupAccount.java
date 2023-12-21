@@ -1,6 +1,7 @@
-package com.example.architectures.postings;
+package com.example.architectures.ecommerce;
 
 import com.example.architectures.common.EventPublisher;
+import com.example.architectures.postings.ClientId;
 import org.jmolecules.event.annotation.DomainEventPublisher;
 import org.springframework.stereotype.Component;
 

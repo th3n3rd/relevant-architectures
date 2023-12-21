@@ -1,7 +1,10 @@
-package com.example.architectures.postings
+package com.example.architectures.ecommerce
 
 import com.example.architectures.common.InMemoryEventPublisher
 import com.example.architectures.common.WebSecurityConfig
+import com.example.architectures.postings.ClientId
+import com.example.architectures.postings.ConsultantId
+import com.example.architectures.postings.InMemoryAuthorisations
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.json.AutoConfigureJson
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
