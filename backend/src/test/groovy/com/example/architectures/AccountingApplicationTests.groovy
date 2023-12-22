@@ -6,9 +6,9 @@ import org.springframework.modulith.docs.Documenter
 import spock.lang.Specification
 
 @SpringBootTest
-class DemoApplicationTests extends Specification {
+class AccountingApplicationTests extends Specification {
 
-	def modules = ApplicationModules.of(DemoApplication.class);
+	def modules = ApplicationModules.of(AccountingApplication.class);
 
 	def "context loads successfully"() {
 		expect:
