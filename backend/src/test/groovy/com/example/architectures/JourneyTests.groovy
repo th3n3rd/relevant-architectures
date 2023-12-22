@@ -49,7 +49,7 @@ class JourneyTests extends Specification {
         def consultant = new TaxConsultant(httpClient, consultantId)
 
         consultant.authenticateOn(authServer)
-        consultant.setupAccount(clientId, klarnaAccount)
+        consultant.setupEcommerceAccount(clientId, klarnaAccount)
 
         expect:
         consultant.journalContains(clientId, [

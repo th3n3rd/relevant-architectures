@@ -21,7 +21,7 @@ class TaxConsultant {
         this.authenticationToken = server.validBearerToken(consultantId)
     }
 
-    def setupAccount(ClientId clientId, AccountId accountId) {
+    def setupEcommerceAccount(ClientId clientId, AccountId accountId) {
         def request = RequestEntity
             .post("/clients/{clientId}/accounts", clientId.value())
             .header("Authorization", "Bearer $authenticationToken")
