@@ -1,6 +1,6 @@
 package com.example.architectures.ecommerce;
 
-import com.example.architectures.postings.ClientId;
+import com.example.architectures.common.ClientId;
 import org.jmolecules.event.annotation.DomainEvent;
 
 @DomainEvent

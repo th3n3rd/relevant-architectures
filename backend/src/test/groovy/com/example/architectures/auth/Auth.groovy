@@ -1,7 +1,6 @@
 package com.example.architectures.auth
 
-import com.example.architectures.common.ConsultantAuthToken
-import com.example.architectures.postings.ConsultantId
+import com.example.architectures.common.ConsultantId
 import com.nimbusds.jose.JWSAlgorithm
 import com.nimbusds.jose.JWSHeader
 import com.nimbusds.jose.crypto.RSASSASigner

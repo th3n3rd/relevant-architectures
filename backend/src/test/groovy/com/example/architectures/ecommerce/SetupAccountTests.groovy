@@ -1,7 +1,7 @@
 package com.example.architectures.ecommerce
 
+import com.example.architectures.common.ClientId
 import com.example.architectures.common.InMemoryEventPublisher
-import com.example.architectures.postings.ClientId
 import spock.lang.Specification
 
 class SetupAccountTests extends Specification {

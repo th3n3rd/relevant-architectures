@@ -1,7 +1,9 @@
-package com.example.architectures.postings
+package com.example.architectures.posting
 
 import com.example.architectures.auth.InMemoryAuthorisations
-import com.example.architectures.common.WebSecurityConfig
+import com.example.architectures.auth.WebSecurityConfig
+import com.example.architectures.common.ClientId
+import com.example.architectures.common.ConsultantId
 import com.example.architectures.ecommerce.AccountId
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.json.AutoConfigureJson

@@ -1,9 +1,9 @@
 package com.example.architectures
 
 import com.example.architectures.auth.AuthServer
+import com.example.architectures.common.ClientId
+import com.example.architectures.common.ConsultantId
 import com.example.architectures.ecommerce.AccountId
-import com.example.architectures.postings.ClientId
-import com.example.architectures.postings.ConsultantId
 import org.springframework.boot.test.web.client.TestRestTemplate
 import org.springframework.http.RequestEntity
 

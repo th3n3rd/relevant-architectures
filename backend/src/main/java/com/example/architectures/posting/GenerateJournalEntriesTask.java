@@ -1,4 +1,4 @@
-package com.example.architectures.postings;
+package com.example.architectures.posting;
 
 import com.example.architectures.ecommerce.NewAccountSetup;
 import org.jmolecules.event.annotation.DomainEventHandler;

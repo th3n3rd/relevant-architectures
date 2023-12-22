@@ -1,5 +1,6 @@
-package com.example.architectures.postings;
+package com.example.architectures.posting;
 
+import com.example.architectures.common.ClientId;
 import com.example.architectures.auth.ConsultantAuthorised;
 import com.example.architectures.ecommerce.AccountId;
 import java.util.List;

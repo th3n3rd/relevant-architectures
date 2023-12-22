@@ -1,4 +1,4 @@
-package com.example.architectures.common;
+package com.example.architectures.auth;
 
 import org.springframework.boot.actuate.autoconfigure.security.servlet.EndpointRequest;
 import org.springframework.context.annotation.Bean;

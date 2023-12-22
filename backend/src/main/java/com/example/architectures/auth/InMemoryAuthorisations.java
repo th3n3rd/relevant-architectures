@@ -1,7 +1,7 @@
 package com.example.architectures.auth;
 
-import com.example.architectures.postings.ClientId;
-import com.example.architectures.postings.ConsultantId;
+import com.example.architectures.common.ClientId;
+import com.example.architectures.common.ConsultantId;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.stereotype.Repository;

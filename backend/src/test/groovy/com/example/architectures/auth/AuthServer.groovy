@@ -1,6 +1,6 @@
 package com.example.architectures.auth
 
-import com.example.architectures.postings.ConsultantId
+import com.example.architectures.common.ConsultantId
 import org.mockserver.configuration.Configuration
 import org.mockserver.model.HttpRequest
 import org.mockserver.model.HttpResponse

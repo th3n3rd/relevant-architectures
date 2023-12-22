@@ -1,5 +1,6 @@
-package com.example.architectures.postings;
+package com.example.architectures.posting;
 
+import com.example.architectures.common.ClientId;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.data.domain.Page;
