@@ -1,7 +1,11 @@
-package com.example.architectures.ecommerce
+package com.example.architectures.ecommerce.klarna
 
 
 import com.example.architectures.common.ClientId
+import com.example.architectures.ecommerce.AccountId
+import com.example.architectures.ecommerce.FetchTransactionsFailed
+import com.example.architectures.ecommerce.PaymentGateway
+import com.example.architectures.ecommerce.Transaction
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.DynamicPropertyRegistry

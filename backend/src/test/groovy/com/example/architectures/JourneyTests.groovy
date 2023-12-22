@@ -5,7 +5,7 @@ import com.example.architectures.auth.InMemoryAuthorisations
 import com.example.architectures.common.ClientId
 import com.example.architectures.common.ConsultantId
 import com.example.architectures.ecommerce.AccountId
-import com.example.architectures.ecommerce.KlarnaServer
+import com.example.architectures.ecommerce.klarna.KlarnaServer
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.web.client.TestRestTemplate

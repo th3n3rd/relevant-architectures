@@ -1,6 +1,6 @@
-package com.example.architectures.ecommerce
+package com.example.architectures.ecommerce.klarna
 
-
+import com.example.architectures.ecommerce.AccountId
 import org.mockserver.configuration.Configuration
 import org.mockserver.model.HttpRequest
 import org.mockserver.model.HttpResponse

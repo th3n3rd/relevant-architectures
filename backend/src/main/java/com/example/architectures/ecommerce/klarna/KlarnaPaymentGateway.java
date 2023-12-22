@@ -1,10 +1,12 @@
-package com.example.architectures.ecommerce;
+package com.example.architectures.ecommerce.klarna;
 
 import com.example.architectures.common.ClientId;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.example.architectures.ecommerce.AccountId;
+import com.example.architectures.ecommerce.FetchTransactionsFailed;
+import com.example.architectures.ecommerce.PaymentGateway;
+import com.example.architectures.ecommerce.Transaction;
 import java.math.BigDecimal;
 import java.util.List;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.RequestEntity;
@@ -13,14 +15,14 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 @Component
-@EnableConfigurationProperties(KlarnaPaymentGateway.Properties.class)
+@EnableConfigurationProperties(KlarnaSettings.class)
 class KlarnaPaymentGateway implements PaymentGateway {
 
     private final RestTemplate client;
 
-    KlarnaPaymentGateway(Properties properties, RestTemplateBuilder builder) {
+    KlarnaPaymentGateway(KlarnaSettings settings, RestTemplateBuilder builder) {
         this.client = builder
-            .rootUri(properties.uri())
+            .rootUri(settings.uri())
             .build();
     }
 
@@ -32,8 +34,8 @@ class KlarnaPaymentGateway implements PaymentGateway {
         }
 
         var request = RequestEntity
-            .get("/v2/accounts/{accountId}/transactions", accountId.value())
-            .header("consent-id", consent.consentId)
+            .get(Klarna.Endpoints.Transactions, accountId.value())
+            .header(Klarna.Headers.ConsentId, consent.consentId())
             .build();
 
         try {
@@ -41,13 +43,13 @@ class KlarnaPaymentGateway implements PaymentGateway {
                 request,
                 Klarna.Transactions.class
             );
-            return receivedTransactions.getBody().transactions
+            return receivedTransactions.getBody().transactions()
                 .stream()
                 .map(it -> new Transaction(
                     clientId,
                     accountId,
-                    new BigDecimal(it.amount.amount),
-                    it.amount.currency
+                    new BigDecimal(it.amount().amount()),
+                    it.amount().currency()
                 ))
                 .toList();
         } catch (HttpClientErrorException.Forbidden e) {
@@ -57,24 +59,10 @@ class KlarnaPaymentGateway implements PaymentGateway {
 
     private Klarna.Consent requestConsent(AccountId accountId) {
         return client.postForObject(
-            "/v2/consent-sessions",
+            Klarna.Endpoints.ConsentSessions,
             new Klarna.RequestConsent(accountId.value()),
             Klarna.Consent.class
         );
     }
 
-    @ConfigurationProperties(prefix = "payment-gateway.klarna")
-    record Properties(String uri) {}
-
-    private static class Klarna {
-        record RequestConsent(String clientId) {}
-        record Consent(String status, @JsonProperty("consent_id") String consentId) {
-            boolean isRejected() {
-                return "REJECTED".equals(status);
-            }
-        }
-        record Transactions(List<Transaction> transactions) {}
-        record Transaction(Amount amount) {}
-        record Amount(String amount, String currency) {}
-    }
 }
