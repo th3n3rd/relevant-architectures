@@ -20,15 +20,16 @@ class ListJournalEntriesApi {
 
     @ConsultantAuthorised
     @GetMapping("/clients/{clientId}/journal")
-    Response.PaginatedJournalEntries handle(
+    Response.Entries handle(
         @PathVariable ClientId clientId,
         Pageable page
     ) {
         var entries = journal.findAllByClientId(clientId, page);
-        return new Response.PaginatedJournalEntries(
+        return new Response.Entries(
             entries
                 .stream()
-                .map(it -> new Response.JournalEntry(
+                .map(it -> new Response.Entry(
+                    it.id(),
                     it.clientId(),
                     it.accountId(),
                     it.amount().toString(),
@@ -45,8 +46,8 @@ class ListJournalEntriesApi {
     }
 
     static class Response {
-        record PaginatedJournalEntries(List<JournalEntry> entries, Metadata metadata) {}
-        record JournalEntry(ClientId clientId, AccountId accountId, String amount, String currency) {}
+        record Entries(List<Entry> entries, Metadata metadata) {}
+        record Entry(JournalEntryId id, ClientId clientId, AccountId accountId, String amount, String currency) {}
         record Metadata(int pageNumber, int pageSize, int totalPages, long totalElements) {}
     }
 }

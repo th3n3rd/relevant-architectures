@@ -48,13 +48,16 @@ class ListJournalEntriesApiTests extends Specification {
         def anotherClientId = new ClientId(135)
         def klarna = new AccountId("789")
         def amazon = new AccountId("792")
-        authorisations.authorise(anyConsultantId, anyClientId)
-        journal.saveAll([
+        def entries = [
             new JournalEntry(anyClientId, klarna, new BigDecimal("120.0"), "GBP"),
             new JournalEntry(anotherClientId, amazon, new BigDecimal("80.0"), "EUR"),
             new JournalEntry(anyClientId, amazon, new BigDecimal("30.0"), "EUR"),
             new JournalEntry(anotherClientId, klarna, new BigDecimal("50.0"), "GBP"),
-        ])
+        ]
+        def firstEntryId = entries.get(0).id().value()
+        def thirdEntryId = entries.get(2).id().value()
+        authorisations.authorise(anyConsultantId, anyClientId)
+        journal.saveAll(entries)
 
         when:
         def result = client.perform(
@@ -68,12 +71,14 @@ class ListJournalEntriesApiTests extends Specification {
         {
             "entries": [
                 {
+                    "id": "$firstEntryId",
                     "clientId": $anyClientId.value,
                     "accountId": "$klarna.value",
                     "amount": "120.0",
                     "currency": "GBP"
                 },
                 {
+                    "id": "$thirdEntryId",
                     "clientId": $anyClientId.value,
                     "accountId": "$amazon.value",
                     "amount": "30.0",

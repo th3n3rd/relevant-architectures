@@ -19,17 +19,43 @@ class GenerateJournalEntriesTests extends Specification {
         given:
         transactionsGateway.fetchTransactions(anyClientId, anyAccountId) >> [
             new Transaction(anyClientId, anyAccountId, new BigDecimal("100.0"), "EUR"),
-            new Transaction(anyClientId, anyAccountId, new BigDecimal("45.0"), "GPB"),
+            new Transaction(anyClientId, anyAccountId, new BigDecimal("45.0"), "GBP"),
         ]
 
         when:
         generatePostings.handle(anyClientId, anyAccountId)
 
         then:
-        journal.findAll() == [
+        match(journal.findAll(), [
             new JournalEntry(anyClientId, anyAccountId, new BigDecimal("100.0"), "EUR"),
-            new JournalEntry(anyClientId, anyAccountId, new BigDecimal("45.0"), "GPB"),
-        ]
+            new JournalEntry(anyClientId, anyAccountId, new BigDecimal("45.0"), "GBP"),
+        ])
     }
 
+    def "generates unique journal entries"() {
+        given:
+        transactionsGateway.fetchTransactions(anyClientId, anyAccountId) >> [
+            new Transaction(anyClientId, anyAccountId, new BigDecimal("10.0"), "GBP"),
+            new Transaction(anyClientId, anyAccountId, new BigDecimal("60.0"), "EUR"),
+        ]
+
+        when:
+        generatePostings.handle(anyClientId, anyAccountId)
+
+        then:
+        def entries = journal.findAll()
+        entries.first().id() != entries.last().id()
+    }
+
+    void match(List<JournalEntry> expected, List<JournalEntry> actual) {
+        assert expected.size() == actual.size()
+        expected.eachWithIndex { exp, int i -> match(exp, actual.get(i)) }
+    }
+
+    void match(JournalEntry expected, JournalEntry actual) {
+        assert expected.clientId() == actual.clientId()
+        assert expected.accountId() == actual.accountId()
+        assert expected.amount() == actual.amount()
+        assert expected.currency() == actual.currency()
+    }
 }
