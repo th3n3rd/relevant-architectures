@@ -42,7 +42,8 @@ class TaxConsultant {
                 clientId: it.clientId,
                 accountId: it.accountId,
                 amount: it.amount,
-                currency: it.currency
+                currency: it.currency,
+                status: it.status
             ]
         }
         assert expected == actual
@@ -57,5 +58,6 @@ class TaxConsultant {
         String accountId
         String amount
         String currency
+        String status
     }
 }

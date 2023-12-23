@@ -14,7 +14,6 @@ import lombok.experimental.Accessors;
 @Getter
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
-@Builder
 @With
 final class JournalEntry {
     private final JournalEntryId id;
@@ -22,12 +21,23 @@ final class JournalEntry {
     private final AccountId accountId;
     private final BigDecimal amount;
     private final String currency;
+    private final Status status;
 
+    @Builder
     public JournalEntry(ClientId clientId, AccountId accountId, BigDecimal amount, String currency) {
         this.id = new JournalEntryId();
         this.clientId = clientId;
         this.accountId = accountId;
         this.amount = amount;
         this.currency = currency;
+        this.status = Status.Incomplete;
+    }
+
+    boolean isIncomplete() {
+        return Status.Incomplete.equals(status);
+    }
+
+    enum Status {
+        Incomplete
     }
 }

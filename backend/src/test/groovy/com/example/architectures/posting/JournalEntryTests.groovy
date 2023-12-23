@@ -10,7 +10,6 @@ class JournalEntryTests extends Specification {
         given:
         def first = JournalEntry
             .builder()
-            .id(JournalEntryId.of("00000000-0000-0000-0000-000000000000"))
             .clientId(new ClientId(456))
             .accountId(new AccountId("729"))
             .amount(new BigDecimal("10.0"))

@@ -75,14 +75,16 @@ class ListJournalEntriesApiTests extends Specification {
                     "clientId": $anyClientId.value,
                     "accountId": "$klarna.value",
                     "amount": "120.0",
-                    "currency": "GBP"
+                    "currency": "GBP",
+                    "status": "Incomplete"
                 },
                 {
                     "id": "$thirdEntryId",
                     "clientId": $anyClientId.value,
                     "accountId": "$amazon.value",
                     "amount": "30.0",
-                    "currency": "EUR"
+                    "currency": "EUR",
+                    "status": "Incomplete"
                 }
             ]
         }

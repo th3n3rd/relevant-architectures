@@ -1,7 +1,7 @@
 package com.example.architectures.posting;
 
-import com.example.architectures.common.ClientId;
 import com.example.architectures.auth.ConsultantAuthorised;
+import com.example.architectures.common.ClientId;
 import com.example.architectures.ecommerce.AccountId;
 import java.util.List;
 import org.springframework.data.domain.Pageable;
@@ -33,7 +33,8 @@ class ListJournalEntriesApi {
                     it.clientId(),
                     it.accountId(),
                     it.amount().toString(),
-                    it.currency())
+                    it.currency(),
+                    it.status())
                 )
                 .toList(),
             new Response.Metadata(
@@ -47,7 +48,7 @@ class ListJournalEntriesApi {
 
     static class Response {
         record Entries(List<Entry> entries, Metadata metadata) {}
-        record Entry(JournalEntryId id, ClientId clientId, AccountId accountId, String amount, String currency) {}
+        record Entry(JournalEntryId id, ClientId clientId, AccountId accountId, String amount, String currency, JournalEntry.Status status) {}
         record Metadata(int pageNumber, int pageSize, int totalPages, long totalElements) {}
     }
 }

@@ -27,9 +27,33 @@ class GenerateJournalEntriesTests extends Specification {
 
         then:
         match(journal.findAll(), [
-            new JournalEntry(anyClientId, anyAccountId, new BigDecimal("100.0"), "EUR"),
-            new JournalEntry(anyClientId, anyAccountId, new BigDecimal("45.0"), "GBP"),
+            JournalEntry.builder()
+                .clientId(anyClientId)
+                .accountId(anyAccountId)
+                .amount(new BigDecimal("100.0"))
+                .currency("EUR")
+                .build(),
+            JournalEntry.builder()
+                .clientId(anyClientId)
+                .accountId(anyAccountId)
+                .amount(new BigDecimal("45.0"))
+                .currency("GBP")
+                .build(),
         ])
+    }
+
+    def "generates journal entries in an incomplete status"() {
+        given:
+        transactionsGateway.fetchTransactions(anyClientId, anyAccountId) >> [
+            new Transaction(anyClientId, anyAccountId, new BigDecimal("95.0"), "GBP"),
+        ]
+
+        when:
+        generatePostings.handle(anyClientId, anyAccountId)
+
+        then:
+        def entries = journal.findAll()
+        entries.first().isIncomplete()
     }
 
     def "generates unique journal entries"() {
@@ -57,5 +81,6 @@ class GenerateJournalEntriesTests extends Specification {
         assert expected.accountId() == actual.accountId()
         assert expected.amount() == actual.amount()
         assert expected.currency() == actual.currency()
+        assert expected.status() == actual.status()
     }
 }
