@@ -35,7 +35,7 @@ class TaxConsultant {
             .get("/clients/{clientId}/journal", clientId.value())
             .header("Authorization", "Bearer $authenticationToken")
             .build()
-        def response = httpClient.exchange(request, JournalEntries)
+        def response = httpClient.exchange(request, Journal)
         assert response.statusCode.is2xxSuccessful()
         def actual = response.body.entries.collect {
             [
@@ -74,16 +74,16 @@ class TaxConsultant {
         assert actual.containsAll(expected)
     }
 
-    static class JournalEntries {
-        List<JournalEntry> entries
-    }
+    static class Journal {
+        List<Entry> entries
 
-    static class JournalEntry {
-        int clientId
-        String accountId
-        String amount
-        String currency
-        String status
+        static class Entry {
+            int clientId
+            String accountId
+            String amount
+            String currency
+            String status
+        }
     }
 
     static class Ledger {

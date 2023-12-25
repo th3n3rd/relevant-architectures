@@ -17,13 +17,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
 @WebMvcTest([
-    ListJournalEntriesApi,
+    GetJournalDetailsApi,
     InMemoryJournal,
     InMemoryAuthorisations,
     WebSecurityConfig
 ])
 @AutoConfigureJson
-class ListJournalEntriesApiTests extends Specification {
+class GetJournalDetailsApiTests extends Specification {
 
     private static final anyConsultantId = new ConsultantId(456)
     private static final anyClientId = new ClientId(123)

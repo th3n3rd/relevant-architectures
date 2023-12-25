@@ -10,22 +10,22 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-class ListJournalEntriesApi {
+class GetJournalDetailsApi {
 
     private final PaginatedJournal journal;
 
-    ListJournalEntriesApi(PaginatedJournal journal) {
+    GetJournalDetailsApi(PaginatedJournal journal) {
         this.journal = journal;
     }
 
     @ConsultantAuthorised
     @GetMapping("/clients/{clientId}/journal")
-    Response.Entries handle(
+    Response.Journal handle(
         @PathVariable ClientId clientId,
         Pageable page
     ) {
         var entries = journal.findAllByClientId(clientId, page);
-        return new Response.Entries(
+        return new Response.Journal(
             entries
                 .stream()
                 .map(it -> new Response.Entry(
@@ -47,7 +47,7 @@ class ListJournalEntriesApi {
     }
 
     static class Response {
-        record Entries(List<Entry> entries, Metadata metadata) {}
+        record Journal(List<Entry> entries, Metadata metadata) {}
         record Entry(JournalEntryId id, ClientId clientId, AccountId accountId, String amount, String currency, JournalEntry.Status status) {}
         record Metadata(int pageNumber, int pageSize, int totalPages, long totalElements) {}
     }
