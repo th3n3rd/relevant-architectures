@@ -51,6 +51,12 @@ class JourneyTests extends Specification {
         consultant.authenticateOn(authServer)
         consultant.setupEcommerceAccount(clientId, klarnaAccount)
 
+        consultant.createLedger(clientId)
+        consultant.ledgerContains(clientId, [
+            [name: "cash", balance: "0.0"],
+            [name: "sales-revenue", balance: "0.0"]
+        ])
+
         expect:
         consultant.journalContains(clientId, [
             [clientId: clientId.value(), accountId: klarnaAccount.value(), amount: "10.0", currency: "EUR", status: "Incomplete"],

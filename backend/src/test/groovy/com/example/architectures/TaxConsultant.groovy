@@ -49,6 +49,31 @@ class TaxConsultant {
         assert expected == actual
     }
 
+    void createLedger(ClientId clientId) {
+        def request = RequestEntity
+            .post("/clients/{clientId}/ledger", clientId.value())
+            .header("Authorization", "Bearer $authenticationToken")
+            .build()
+        def response = httpClient.exchange(request, Void)
+        assert response.statusCode.is2xxSuccessful()
+    }
+
+    void ledgerContains(ClientId clientId, expected) {
+        def request = RequestEntity
+            .get("/clients/{clientId}/ledger", clientId.value())
+            .header("Authorization", "Bearer $authenticationToken")
+            .build()
+        def response = httpClient.exchange(request, Ledger)
+        assert response.statusCode.is2xxSuccessful()
+        def actual = response.body.accounts.collect {
+            [
+                name: it.name,
+                balance: it.balance
+            ]
+        }
+        assert actual.containsAll(expected)
+    }
+
     static class JournalEntries {
         List<JournalEntry> entries
     }
@@ -59,5 +84,14 @@ class TaxConsultant {
         String amount
         String currency
         String status
+    }
+
+    static class Ledger {
+        List<Account> accounts
+
+        static class Account {
+            String name
+            String balance
+        }
     }
 }
