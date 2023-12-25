@@ -6,14 +6,14 @@ import com.example.architectures.ecommerce.PaymentGateway
 import com.example.architectures.ecommerce.Transaction
 import spock.lang.Specification
 
-class GenerateJournalEntriesTests extends Specification {
+class RecordEcommerceTransactionsTests extends Specification {
 
     private static final anyClientId = new ClientId(123)
     private static final anyAccountId = new AccountId("789")
 
     def transactionsGateway = Mock(PaymentGateway)
     def journal = new InMemoryJournal()
-    def generatePostings = new GenerateJournalEntries(transactionsGateway, journal)
+    def recordEcommerceTransactions = new RecordEcommerceTransactions(transactionsGateway, journal)
 
     def "generate one journal entry foreach transaction received"() {
         given:
@@ -23,7 +23,7 @@ class GenerateJournalEntriesTests extends Specification {
         ]
 
         when:
-        generatePostings.handle(anyClientId, anyAccountId)
+        recordEcommerceTransactions.handle(anyClientId, anyAccountId)
 
         then:
         match(journal.findAll(), [
@@ -49,7 +49,7 @@ class GenerateJournalEntriesTests extends Specification {
         ]
 
         when:
-        generatePostings.handle(anyClientId, anyAccountId)
+        recordEcommerceTransactions.handle(anyClientId, anyAccountId)
 
         then:
         def entries = journal.findAll()
@@ -64,7 +64,7 @@ class GenerateJournalEntriesTests extends Specification {
         ]
 
         when:
-        generatePostings.handle(anyClientId, anyAccountId)
+        recordEcommerceTransactions.handle(anyClientId, anyAccountId)
 
         then:
         def entries = journal.findAll()

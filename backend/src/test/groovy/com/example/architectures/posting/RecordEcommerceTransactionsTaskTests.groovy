@@ -13,7 +13,7 @@ import spock.lang.Specification
 import spock.util.concurrent.PollingConditions
 
 @SpringBootTest
-class GenerateJournalEntriesTaskTests extends Specification {
+class RecordEcommerceTransactionsTaskTests extends Specification {
 
     private static anyClientId = new ClientId(123)
     private static anyAccountId = new AccountId("789")

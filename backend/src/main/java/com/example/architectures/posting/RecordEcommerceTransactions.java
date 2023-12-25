@@ -6,12 +6,12 @@ import com.example.architectures.ecommerce.PaymentGateway;
 import org.springframework.stereotype.Component;
 
 @Component
-class GenerateJournalEntries {
+class RecordEcommerceTransactions {
 
     private final PaymentGateway paymentGateway;
     private final Journal journal;
 
-    GenerateJournalEntries(PaymentGateway paymentGateway, Journal journal) {
+    RecordEcommerceTransactions(PaymentGateway paymentGateway, Journal journal) {
         this.paymentGateway = paymentGateway;
         this.journal = journal;
     }

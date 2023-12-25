@@ -6,17 +6,17 @@ import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
 @Component
-class GenerateJournalEntriesTask {
+class RecordEcommerceTransactionsTask {
 
-    private final GenerateJournalEntries generateJournalEntries;
+    private final RecordEcommerceTransactions recordEcommerceTransactions;
 
-    GenerateJournalEntriesTask(GenerateJournalEntries generateJournalEntries) {
-        this.generateJournalEntries = generateJournalEntries;
+    RecordEcommerceTransactionsTask(RecordEcommerceTransactions recordEcommerceTransactions) {
+        this.recordEcommerceTransactions = recordEcommerceTransactions;
     }
 
     @DomainEventHandler
     @EventListener
     void on(NewAccountSetup event) {
-        generateJournalEntries.handle(event.clientId(), event.accountId());
+        recordEcommerceTransactions.handle(event.clientId(), event.accountId());
     }
 }
