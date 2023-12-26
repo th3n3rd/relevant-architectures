@@ -42,6 +42,9 @@ class TaxConsultant {
                 amount: it.amount,
                 currency: it.currency,
                 status: it.status,
+                lines: it.lines.collect {
+                    []
+                },
                 metadata: [
                     origin: it.metadata.origin,
                     accountId: it.metadata.accountId
@@ -83,7 +86,10 @@ class TaxConsultant {
             String amount
             String currency
             String status
+            List<Line> lines
             Metadata metadata
+
+            static class Line {}
 
             static class Metadata {
                 String origin

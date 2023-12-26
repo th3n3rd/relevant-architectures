@@ -34,6 +34,10 @@ class GetJournalDetailsApi {
                     it.amount().toString(),
                     it.currency(),
                     it.status(),
+                    it.lines()
+                        .stream()
+                        .map(line -> new Response.Entry.Line())
+                        .toList(),
                     new Response.Entry.Metadata(
                         it.metadata().origin(),
                         it.metadata().accountId()
@@ -59,8 +63,10 @@ class GetJournalDetailsApi {
             String amount,
             String currency,
             JournalEntry.Status status,
+            List<Line> lines,
             Metadata metadata
         ) {
+            record Line() {}
             record Metadata(String origin, AccountId accountId) {}
         }
     }

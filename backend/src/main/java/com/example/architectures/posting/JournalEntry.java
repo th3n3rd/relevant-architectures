@@ -3,6 +3,7 @@ package com.example.architectures.posting;
 import com.example.architectures.common.ClientId;
 import com.example.architectures.ecommerce.AccountId;
 import java.math.BigDecimal;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -21,6 +22,7 @@ final class JournalEntry {
     private final BigDecimal amount;
     private final String currency;
     private final Status status;
+    private final List<Line> lines;
     private final Metadata metadata;
 
     @Builder
@@ -30,6 +32,7 @@ final class JournalEntry {
         this.amount = amount;
         this.currency = currency;
         this.status = Status.Incomplete;
+        this.lines = List.of();
         this.metadata = metadata;
     }
 
@@ -45,6 +48,8 @@ final class JournalEntry {
     enum Status {
         Incomplete
     }
+
+    record Line() {}
 
     record Metadata(String origin, AccountId accountId) {}
 }

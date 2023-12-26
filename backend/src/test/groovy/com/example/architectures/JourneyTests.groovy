@@ -59,8 +59,8 @@ class JourneyTests extends Specification {
 
         expect:
         consultant.journalContains(clientId, [
-            [amount: "10.0", currency: "EUR", status: "Incomplete", metadata: [ origin: "e-commerce", accountId: klarnaAccount.value() ]],
-            [amount: "15.0", currency: "EUR", status: "Incomplete", metadata: [ origin: "e-commerce", accountId: klarnaAccount.value() ]],
+            [amount: "10.0", currency: "EUR", status: "Incomplete", lines: [], metadata: [ origin: "e-commerce", accountId: klarnaAccount.value() ]],
+            [amount: "15.0", currency: "EUR", status: "Incomplete", lines: [], metadata: [ origin: "e-commerce", accountId: klarnaAccount.value() ]],
         ])
     }
 

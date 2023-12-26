@@ -80,5 +80,6 @@ class RecordEcommerceTransactionsTests extends Specification {
         assert expected.currency() == actual.currency()
         assert expected.status() == actual.status()
         assert expected.metadata() == actual.metadata()
+        assert expected.lines() == actual.lines()
     }
 }

@@ -92,6 +92,7 @@ class GetJournalDetailsApiTests extends Specification {
                     "amount": "120.0",
                     "currency": "GBP",
                     "status": "Incomplete",
+                    "lines": [],
                     "metadata": {
                         "origin": "e-commerce",
                         "accountId": "$klarna.value"
@@ -103,6 +104,7 @@ class GetJournalDetailsApiTests extends Specification {
                     "amount": "30.0",
                     "currency": "EUR",
                     "status": "Incomplete",
+                    "lines": [],
                     "metadata": {
                         "origin": "e-commerce",
                         "accountId": "$amazon.value"
@@ -151,6 +153,7 @@ class GetJournalDetailsApiTests extends Specification {
                     "clientId": $anyClientId.value,
                     "amount": "70.0",
                     "currency": "EUR",
+                    "lines": [],
                     "metadata": {
                         "origin": "e-commerce",
                         "accountId": "$anyAccountId.value"
