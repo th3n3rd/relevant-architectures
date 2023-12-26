@@ -20,6 +20,7 @@
 		<jmolecules.version>1.8.0</jmolecules.version>
 		<jmolecules-integrations.version>0.16.0</jmolecules-integrations.version>
 		<lombok.version>1.18.30</lombok.version>
+		<apache-httpclient.version>5.2.1</apache-httpclient.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -73,16 +74,21 @@
 			<artifactId>spring-modulith-starter-core</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.springframework.modulith</groupId>
-			<artifactId>spring-modulith-starter-test</artifactId>
-		</dependency>
-		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<version>${lombok.version}</version>
 			<scope>provided</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.apache.httpcomponents.client5</groupId>
+			<artifactId>httpclient5</artifactId>
+			<version>${apache-httpclient.version}</version>
+		</dependency>
 
+		<dependency>
+			<groupId>org.springframework.modulith</groupId>
+			<artifactId>spring-modulith-starter-test</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
