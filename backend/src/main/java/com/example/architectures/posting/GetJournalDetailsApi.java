@@ -31,7 +31,6 @@ class GetJournalDetailsApi {
                 .map(it -> new Response.Entry(
                     it.id(),
                     it.clientId(),
-                    it.accountId(),
                     it.amount().toString(),
                     it.currency(),
                     it.status(),
@@ -57,7 +56,6 @@ class GetJournalDetailsApi {
         record Entry(
             JournalEntryId id,
             ClientId clientId,
-            AccountId accountId,
             String amount,
             String currency,
             JournalEntry.Status status,

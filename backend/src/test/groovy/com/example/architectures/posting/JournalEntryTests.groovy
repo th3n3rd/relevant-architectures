@@ -11,7 +11,6 @@ class JournalEntryTests extends Specification {
         def first = JournalEntry
             .builder()
             .clientId(new ClientId(456))
-            .accountId(new AccountId("729"))
             .amount(new BigDecimal("10.0"))
             .currency("EUR")
             .build()

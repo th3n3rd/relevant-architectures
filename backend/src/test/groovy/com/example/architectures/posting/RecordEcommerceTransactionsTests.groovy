@@ -29,13 +29,11 @@ class RecordEcommerceTransactionsTests extends Specification {
         match(journal.findAll(), [
             JournalEntry.fromEcommerce(anyAccountId)
                 .clientId(anyClientId)
-                .accountId(anyAccountId)
                 .amount(new BigDecimal("100.0"))
                 .currency("EUR")
                 .build(),
             JournalEntry.fromEcommerce(anyAccountId)
                 .clientId(anyClientId)
-                .accountId(anyAccountId)
                 .amount(new BigDecimal("45.0"))
                 .currency("GBP")
                 .build(),
@@ -78,7 +76,6 @@ class RecordEcommerceTransactionsTests extends Specification {
 
     void match(JournalEntry expected, JournalEntry actual) {
         assert expected.clientId() == actual.clientId()
-        assert expected.accountId() == actual.accountId()
         assert expected.amount() == actual.amount()
         assert expected.currency() == actual.currency()
         assert expected.status() == actual.status()

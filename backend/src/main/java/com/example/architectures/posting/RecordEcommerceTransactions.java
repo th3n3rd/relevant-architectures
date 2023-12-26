@@ -21,7 +21,6 @@ class RecordEcommerceTransactions {
             .stream()
             .map(it -> new JournalEntry(
                 it.clientId(),
-                it.accountId(),
                 it.amount(),
                 it.currency(),
                 new JournalEntry.Metadata(

@@ -51,25 +51,21 @@ class GetJournalDetailsApiTests extends Specification {
         def entries = [
             JournalEntry.fromEcommerce(klarna)
                 .clientId(anyClientId)
-                .accountId(klarna)
                 .amount(new BigDecimal("120.0"))
                 .currency("GBP")
                 .build(),
             JournalEntry.fromEcommerce(amazon)
                 .clientId(anotherClientId)
-                .accountId(amazon)
                 .amount(new BigDecimal("80.0"))
                 .currency("EUR")
                 .build(),
             JournalEntry.fromEcommerce(amazon)
                 .clientId(anyClientId)
-                .accountId(amazon)
                 .amount(new BigDecimal("30.0"))
                 .currency("EUR")
                 .build(),
             JournalEntry.fromEcommerce(klarna)
                 .clientId(anotherClientId)
-                .accountId(klarna)
                 .amount(new BigDecimal("50.0"))
                 .currency("GBP")
                 .build(),
@@ -93,7 +89,6 @@ class GetJournalDetailsApiTests extends Specification {
                 {
                     "id": "$firstEntryId",
                     "clientId": $anyClientId.value,
-                    "accountId": "$klarna.value",
                     "amount": "120.0",
                     "currency": "GBP",
                     "status": "Incomplete",
@@ -105,7 +100,6 @@ class GetJournalDetailsApiTests extends Specification {
                 {
                     "id": "$thirdEntryId",
                     "clientId": $anyClientId.value,
-                    "accountId": "$amazon.value",
                     "amount": "30.0",
                     "currency": "EUR",
                     "status": "Incomplete",
@@ -125,19 +119,16 @@ class GetJournalDetailsApiTests extends Specification {
         journal.saveAll([
             JournalEntry.fromEcommerce(anyAccountId)
                 .clientId(anyClientId)
-                .accountId(anyAccountId)
                 .amount(new BigDecimal("45.0"))
                 .currency("GBP")
                 .build(),
             JournalEntry.fromEcommerce(anyAccountId)
                 .clientId(anyClientId)
-                .accountId(anyAccountId)
                 .amount(new BigDecimal("70.0"))
                 .currency("EUR")
                 .build(),
             JournalEntry.fromEcommerce(anyAccountId)
                 .clientId(anyClientId)
-                .accountId(anyAccountId)
                 .amount(new BigDecimal("15.0"))
                 .currency("GBP")
                 .build(),
@@ -158,7 +149,6 @@ class GetJournalDetailsApiTests extends Specification {
             "entries": [
                 {
                     "clientId": $anyClientId.value,
-                    "accountId": "$anyAccountId.value",
                     "amount": "70.0",
                     "currency": "EUR",
                     "metadata": {

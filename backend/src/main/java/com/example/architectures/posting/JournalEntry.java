@@ -18,17 +18,15 @@ import lombok.experimental.Accessors;
 final class JournalEntry {
     private final JournalEntryId id;
     private final ClientId clientId;
-    private final AccountId accountId;
     private final BigDecimal amount;
     private final String currency;
     private final Status status;
     private final Metadata metadata;
 
     @Builder
-    public JournalEntry(ClientId clientId, AccountId accountId, BigDecimal amount, String currency, Metadata metadata) {
+    public JournalEntry(ClientId clientId, BigDecimal amount, String currency, Metadata metadata) {
         this.id = new JournalEntryId();
         this.clientId = clientId;
-        this.accountId = accountId;
         this.amount = amount;
         this.currency = currency;
         this.status = Status.Incomplete;
