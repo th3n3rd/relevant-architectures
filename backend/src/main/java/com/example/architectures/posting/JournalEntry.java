@@ -22,22 +22,31 @@ final class JournalEntry {
     private final BigDecimal amount;
     private final String currency;
     private final Status status;
+    private final Metadata metadata;
 
     @Builder
-    public JournalEntry(ClientId clientId, AccountId accountId, BigDecimal amount, String currency) {
+    public JournalEntry(ClientId clientId, AccountId accountId, BigDecimal amount, String currency, Metadata metadata) {
         this.id = new JournalEntryId();
         this.clientId = clientId;
         this.accountId = accountId;
         this.amount = amount;
         this.currency = currency;
         this.status = Status.Incomplete;
+        this.metadata = metadata;
     }
 
     boolean isIncomplete() {
         return Status.Incomplete.equals(status);
     }
 
+    static JournalEntry.JournalEntryBuilder fromEcommerce(AccountId accountId) {
+        return JournalEntry.builder()
+            .metadata(new Metadata("e-commerce", accountId));
+    }
+
     enum Status {
         Incomplete
     }
+
+    record Metadata(String origin, AccountId accountId) {}
 }

@@ -39,11 +39,13 @@ class TaxConsultant {
         assert response.statusCode.is2xxSuccessful()
         def actual = response.body.entries.collect {
             [
-                clientId: it.clientId,
-                accountId: it.accountId,
                 amount: it.amount,
                 currency: it.currency,
-                status: it.status
+                status: it.status,
+                metadata: [
+                    origin: it.metadata.origin,
+                    accountId: it.metadata.accountId
+                ]
             ]
         }
         assert expected == actual
@@ -78,11 +80,15 @@ class TaxConsultant {
         List<Entry> entries
 
         static class Entry {
-            int clientId
-            String accountId
             String amount
             String currency
             String status
+            Metadata metadata
+
+            static class Metadata {
+                String origin
+                String accountId
+            }
         }
     }
 

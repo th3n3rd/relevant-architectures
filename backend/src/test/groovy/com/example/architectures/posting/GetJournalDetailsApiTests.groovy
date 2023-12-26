@@ -49,10 +49,30 @@ class GetJournalDetailsApiTests extends Specification {
         def klarna = new AccountId("789")
         def amazon = new AccountId("792")
         def entries = [
-            new JournalEntry(anyClientId, klarna, new BigDecimal("120.0"), "GBP"),
-            new JournalEntry(anotherClientId, amazon, new BigDecimal("80.0"), "EUR"),
-            new JournalEntry(anyClientId, amazon, new BigDecimal("30.0"), "EUR"),
-            new JournalEntry(anotherClientId, klarna, new BigDecimal("50.0"), "GBP"),
+            JournalEntry.fromEcommerce(klarna)
+                .clientId(anyClientId)
+                .accountId(klarna)
+                .amount(new BigDecimal("120.0"))
+                .currency("GBP")
+                .build(),
+            JournalEntry.fromEcommerce(amazon)
+                .clientId(anotherClientId)
+                .accountId(amazon)
+                .amount(new BigDecimal("80.0"))
+                .currency("EUR")
+                .build(),
+            JournalEntry.fromEcommerce(amazon)
+                .clientId(anyClientId)
+                .accountId(amazon)
+                .amount(new BigDecimal("30.0"))
+                .currency("EUR")
+                .build(),
+            JournalEntry.fromEcommerce(klarna)
+                .clientId(anotherClientId)
+                .accountId(klarna)
+                .amount(new BigDecimal("50.0"))
+                .currency("GBP")
+                .build(),
         ]
         def firstEntryId = entries.get(0).id().value()
         def thirdEntryId = entries.get(2).id().value()
@@ -76,7 +96,11 @@ class GetJournalDetailsApiTests extends Specification {
                     "accountId": "$klarna.value",
                     "amount": "120.0",
                     "currency": "GBP",
-                    "status": "Incomplete"
+                    "status": "Incomplete",
+                    "metadata": {
+                        "origin": "e-commerce",
+                        "accountId": "$klarna.value"
+                    }
                 },
                 {
                     "id": "$thirdEntryId",
@@ -84,7 +108,11 @@ class GetJournalDetailsApiTests extends Specification {
                     "accountId": "$amazon.value",
                     "amount": "30.0",
                     "currency": "EUR",
-                    "status": "Incomplete"
+                    "status": "Incomplete",
+                    "metadata": {
+                        "origin": "e-commerce",
+                        "accountId": "$amazon.value"
+                    }
                 }
             ]
         }
@@ -95,9 +123,24 @@ class GetJournalDetailsApiTests extends Specification {
         given:
         authorisations.authorise(anyConsultantId, anyClientId)
         journal.saveAll([
-            new JournalEntry(anyClientId, anyAccountId, new BigDecimal("45.0"), "GBP"),
-            new JournalEntry(anyClientId, anyAccountId, new BigDecimal("70.0"), "EUR"),
-            new JournalEntry(anyClientId, anyAccountId, new BigDecimal("15.0"), "GPB"),
+            JournalEntry.fromEcommerce(anyAccountId)
+                .clientId(anyClientId)
+                .accountId(anyAccountId)
+                .amount(new BigDecimal("45.0"))
+                .currency("GBP")
+                .build(),
+            JournalEntry.fromEcommerce(anyAccountId)
+                .clientId(anyClientId)
+                .accountId(anyAccountId)
+                .amount(new BigDecimal("70.0"))
+                .currency("EUR")
+                .build(),
+            JournalEntry.fromEcommerce(anyAccountId)
+                .clientId(anyClientId)
+                .accountId(anyAccountId)
+                .amount(new BigDecimal("15.0"))
+                .currency("GBP")
+                .build(),
         ])
 
         when:
@@ -117,7 +160,11 @@ class GetJournalDetailsApiTests extends Specification {
                     "clientId": $anyClientId.value,
                     "accountId": "$anyAccountId.value",
                     "amount": "70.0",
-                    "currency": "EUR"
+                    "currency": "EUR",
+                    "metadata": {
+                        "origin": "e-commerce",
+                        "accountId": "$anyAccountId.value"
+                    }
                 }
             ],
             "metadata": {

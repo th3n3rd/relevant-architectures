@@ -34,10 +34,14 @@ class GetJournalDetailsApi {
                     it.accountId(),
                     it.amount().toString(),
                     it.currency(),
-                    it.status())
-                )
+                    it.status(),
+                    new Response.Entry.Metadata(
+                        it.metadata().origin(),
+                        it.metadata().accountId()
+                    )
+                ))
                 .toList(),
-            new Response.Metadata(
+            new Response.Journal.Metadata(
                 entries.getNumber(),
                 entries.getSize(),
                 entries.getTotalPages(),
@@ -47,8 +51,19 @@ class GetJournalDetailsApi {
     }
 
     static class Response {
-        record Journal(List<Entry> entries, Metadata metadata) {}
-        record Entry(JournalEntryId id, ClientId clientId, AccountId accountId, String amount, String currency, JournalEntry.Status status) {}
-        record Metadata(int pageNumber, int pageSize, int totalPages, long totalElements) {}
+        record Journal(List<Entry> entries, Metadata metadata) {
+            record Metadata(int pageNumber, int pageSize, int totalPages, long totalElements) {}
+        }
+        record Entry(
+            JournalEntryId id,
+            ClientId clientId,
+            AccountId accountId,
+            String amount,
+            String currency,
+            JournalEntry.Status status,
+            Metadata metadata
+        ) {
+            record Metadata(String origin, AccountId accountId) {}
+        }
     }
 }
