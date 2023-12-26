@@ -36,7 +36,12 @@ class GetJournalDetailsApi {
                     it.status(),
                     it.lines()
                         .stream()
-                        .map(line -> new Response.Entry.Line())
+                        .map(line -> new Response.Entry.Line(
+                            line.account().name(),
+                            line.amount().toString(),
+                            line.currency(),
+                            line.type()
+                        ))
                         .toList(),
                     new Response.Entry.Metadata(
                         it.metadata().origin(),
@@ -66,7 +71,7 @@ class GetJournalDetailsApi {
             List<Line> lines,
             Metadata metadata
         ) {
-            record Line() {}
+            record Line(String accountName, String amount, String currency, JournalEntry.Line.Type type) {}
             record Metadata(String origin, AccountId accountId) {}
         }
     }

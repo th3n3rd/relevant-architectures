@@ -1,6 +1,7 @@
 package com.example.architectures.posting;
 
 import java.util.List;
+import java.util.Optional;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -22,5 +23,12 @@ class ChartOfAccounts {
 
     List<FinancialAccount> findAll() {
         return Standard;
+    }
+
+    public Optional<FinancialAccount> findByName(String accountName) {
+        return Standard
+            .stream()
+            .filter(it -> it.name().equals(accountName))
+            .findFirst();
     }
 }

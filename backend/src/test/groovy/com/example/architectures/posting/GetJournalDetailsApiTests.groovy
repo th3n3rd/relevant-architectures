@@ -12,6 +12,10 @@ import org.springframework.test.web.servlet.MockMvc
 import spock.lang.Specification
 
 import static com.example.architectures.auth.Auth.authenticatedConsultant
+import static com.example.architectures.posting.FinancialAccount.asset
+import static com.example.architectures.posting.FinancialAccount.revenue
+import static com.example.architectures.posting.JournalEntry.Line.credit
+import static com.example.architectures.posting.JournalEntry.Line.debit
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
@@ -63,7 +67,11 @@ class GetJournalDetailsApiTests extends Specification {
                 .clientId(anyClientId)
                 .amount(new BigDecimal("30.0"))
                 .currency("EUR")
-                .build(),
+                .build()
+                .withLines(List.of(
+                    debit(asset("cash"), new BigDecimal("30.0"), "EUR"),
+                    credit(revenue("sales-revenue"), new BigDecimal("30.0"), "EUR"),
+                )),
             JournalEntry.fromEcommerce(klarna)
                 .clientId(anotherClientId)
                 .amount(new BigDecimal("50.0"))
@@ -104,7 +112,10 @@ class GetJournalDetailsApiTests extends Specification {
                     "amount": "30.0",
                     "currency": "EUR",
                     "status": "Incomplete",
-                    "lines": [],
+                    "lines": [
+                        { type: "Debit", accountName: "cash", amount: "30.0", currency: "EUR" },
+                        { type: "Credit", accountName: "sales-revenue", amount: "30.0", currency: "EUR" }
+                    ],
                     "metadata": {
                         "origin": "e-commerce",
                         "accountId": "$amazon.value"

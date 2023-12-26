@@ -23,6 +23,7 @@ class JourneyTests extends Specification {
     static final consultantId = new ConsultantId(456)
     static final clientId = new ClientId(123)
     static final klarnaAccount = new AccountId("789")
+    static final firstEntry = 0
 
     @Autowired
     private TestRestTemplate httpClient
@@ -57,11 +58,30 @@ class JourneyTests extends Specification {
             [name: "sales-revenue", balance: "0.0"]
         ])
 
-        expect:
         consultant.journalContains(clientId, [
             [amount: "10.0", currency: "EUR", status: "Incomplete", lines: [], metadata: [ origin: "e-commerce", accountId: klarnaAccount.value() ]],
             [amount: "15.0", currency: "EUR", status: "Incomplete", lines: [], metadata: [ origin: "e-commerce", accountId: klarnaAccount.value() ]],
         ])
+
+        consultant.editJournal(clientId, firstEntry, [
+            [type: "Debit", accountName: "cash", amount: "10.0", currency: "EUR"],
+            [type: "Credit", accountName: "sales-revenue", amount: "10.0", currency: "EUR"]
+        ])
+
+        consultant.journalContains(clientId, [
+            [
+                amount: "10.0",
+                currency: "EUR",
+                status: "Incomplete",
+                lines: [
+                    [type: "Debit", accountName: "cash", amount: "10.0", currency: "EUR"],
+                    [type: "Credit", accountName: "sales-revenue", amount: "10.0", currency: "EUR"]
+                ],
+                metadata: [ origin: "e-commerce", accountId: klarnaAccount.value() ]
+            ],
+        ])
+
+        expect: true
     }
 
 }
