@@ -45,18 +45,21 @@ final class JournalEntry {
         List<Line> lines,
         Metadata metadata
     ) {
-        validateLines(lines);
         this.id = id;
         this.clientId = clientId;
         this.amount = amount;
         this.currency = currency;
-        this.status = status;
         this.lines = lines;
         this.metadata = metadata;
+        this.status = computeStatus();
     }
 
     boolean isIncomplete() {
         return Status.Incomplete.equals(status);
+    }
+
+    boolean isComplete() {
+        return Status.Complete.equals(status);
     }
 
     static JournalEntry.JournalEntryBuilder fromEcommerce(AccountId accountId) {
@@ -64,7 +67,11 @@ final class JournalEntry {
             .metadata(new Metadata("e-commerce", accountId));
     }
 
-    private void validateLines(List<Line> lines) {
+    private Status computeStatus() {
+        if (lines.isEmpty()) {
+            return Status.Incomplete;
+        }
+
         var totalDebit = BigDecimal.ZERO;
         var totalCredit = BigDecimal.ZERO;
 
@@ -79,10 +86,17 @@ final class JournalEntry {
         if (!totalDebit.equals(totalCredit)) {
             throw new JournalEntryUnbalanced();
         }
+
+        if (!totalCredit.equals(amount)) {
+            return Status.Incomplete;
+        }
+
+        return Status.Complete;
     }
 
     enum Status {
-        Incomplete
+        Incomplete,
+        Complete
     }
 
     record Line(FinancialAccount account, BigDecimal amount, String currency, Type type) {

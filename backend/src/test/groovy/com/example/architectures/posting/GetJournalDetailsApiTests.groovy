@@ -111,7 +111,7 @@ class GetJournalDetailsApiTests extends Specification {
                     "clientId": $anyClientId.value,
                     "amount": "30.0",
                     "currency": "EUR",
-                    "status": "Incomplete",
+                    "status": "Complete",
                     "lines": [
                         { type: "Debit", accountName: "cash", amount: "30.0", currency: "EUR" },
                         { type: "Credit", accountName: "sales-revenue", amount: "30.0", currency: "EUR" }

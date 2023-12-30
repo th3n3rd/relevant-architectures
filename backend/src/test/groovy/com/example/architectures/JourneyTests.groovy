@@ -72,7 +72,7 @@ class JourneyTests extends Specification {
             [
                 amount: "10.0",
                 currency: "EUR",
-                status: "Incomplete",
+                status: "Complete",
                 lines: [
                     [type: "Debit", accountName: "cash", amount: "10.0", currency: "EUR"],
                     [type: "Credit", accountName: "sales-revenue", amount: "10.0", currency: "EUR"]
