@@ -21,8 +21,8 @@ class JournalEntryTests extends Specification {
             .build()
 
         when:
-        def second = first.withAmount(new BigDecimal("15.0"))
-        def third = first.withId(new JournalEntryId())
+        def second = first.toBuilder().amount(new BigDecimal("15.0")).build()
+        def third = first.toBuilder().id(new JournalEntryId()).build()
 
         then:
         first == second

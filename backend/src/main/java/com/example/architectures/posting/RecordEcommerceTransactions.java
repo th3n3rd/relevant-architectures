@@ -19,15 +19,13 @@ class RecordEcommerceTransactions {
     void handle(ClientId clientId, AccountId accountId) {
         var newEntries = paymentGateway.fetchTransactions(clientId, accountId)
             .stream()
-            .map(it -> new JournalEntry(
-                it.clientId(),
-                it.amount(),
-                it.currency(),
-                new JournalEntry.Metadata(
-                    "e-commerce",
-                    it.accountId()
-                )
-            ))
+            .map(it -> JournalEntry
+                .fromEcommerce(it.accountId())
+                .clientId(it.clientId())
+                .amount(it.amount())
+                .currency(it.currency())
+                .build()
+            )
             .toList();
 
         journal.saveAll(newEntries);

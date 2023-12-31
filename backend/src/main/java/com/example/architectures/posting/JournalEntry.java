@@ -7,13 +7,11 @@ import java.util.List;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.With;
 import lombok.experimental.Accessors;
 
 @Accessors(fluent = true)
 @Getter
 @EqualsAndHashCode(of = "id")
-@With
 final class JournalEntry {
     private final JournalEntryId id;
     private final ClientId clientId;
@@ -23,35 +21,26 @@ final class JournalEntry {
     private final List<Line> lines;
     private final Metadata metadata;
 
-    @Builder
-    public JournalEntry(ClientId clientId, BigDecimal amount, String currency, Metadata metadata) {
-        this(
-            new JournalEntryId(),
-            clientId,
-            amount,
-            currency,
-            Status.Incomplete,
-            List.of(),
-            metadata
-        );
-    }
-
+    @Builder(toBuilder = true)
     private JournalEntry(
         JournalEntryId id,
         ClientId clientId,
         BigDecimal amount,
         String currency,
-        Status status,
         List<Line> lines,
         Metadata metadata
     ) {
-        this.id = id;
+        this.id = id == null ? new JournalEntryId() : id;
         this.clientId = clientId;
         this.amount = amount;
         this.currency = currency;
-        this.lines = lines;
+        this.lines = lines == null ? List.of() : lines;
         this.metadata = metadata;
         this.status = computeStatus();
+    }
+
+    JournalEntry withLines(List<Line> lines) {
+        return toBuilder().lines(lines).build();
     }
 
     boolean isIncomplete() {
