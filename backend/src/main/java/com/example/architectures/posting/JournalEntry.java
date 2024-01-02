@@ -45,12 +45,8 @@ final class JournalEntry {
         this.runningBalance = Balance.of(this.lines);
         this.status = computeStatus();
         if (markedAsPosted() && !isPosted()) {
-            throw new JournalEntryIncomplete();
+            throw new JournalEntryNotReadyForPosting();
         }
-    }
-
-    private boolean markedAsPosted() {
-        return !Objects.isNull(postedAt);
     }
 
     JournalEntry withLines(List<Line> lines) {
@@ -77,6 +73,10 @@ final class JournalEntry {
         return toBuilder()
             .postedAt(LocalDateTime.now())
             .build();
+    }
+
+    private boolean markedAsPosted() {
+        return !Objects.isNull(postedAt);
     }
 
     private Status computeStatus() {

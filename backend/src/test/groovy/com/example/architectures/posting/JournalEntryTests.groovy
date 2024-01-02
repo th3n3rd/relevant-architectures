@@ -36,26 +36,7 @@ class JournalEntryTests extends Specification {
         first != third
     }
 
-    def "entries with fully balanced entries are marked as complete"() {
-        given:
-        def entry = JournalEntry
-            .builder()
-            .clientId(anyClientId)
-            .amount(new BigDecimal("10.0"))
-            .currency("EUR")
-            .build()
-
-        when:
-        def updatedEntry = entry.withLines(List.of(
-            credit(Cash, new BigDecimal("10.0"), "EUR"),
-            debit(SalesRevenue, new BigDecimal("10.0"), "EUR"),
-        ))
-
-        then:
-        updatedEntry.isComplete()
-    }
-
-    def "entries with no lines are marked as incomplete"() {
+    def "entries with no lines are considered incomplete"() {
         when:
         def entry = JournalEntry
             .builder()
@@ -68,7 +49,7 @@ class JournalEntryTests extends Specification {
         entry.isIncomplete()
     }
 
-    def "entries partially balanced are marked as incomplete"() {
+    def "entries partially balanced are considered incomplete"() {
         given:
         def entry = JournalEntry
             .builder()
@@ -87,7 +68,26 @@ class JournalEntryTests extends Specification {
         updatedEntry.isIncomplete()
     }
 
-    def "entries with a posting date and completed are marked as posted"() {
+    def "entries with fully balanced lines are considered complete"() {
+        given:
+        def entry = JournalEntry
+            .builder()
+            .clientId(anyClientId)
+            .amount(new BigDecimal("10.0"))
+            .currency("EUR")
+            .build()
+
+        when:
+        def updatedEntry = entry.withLines(List.of(
+            credit(Cash, new BigDecimal("10.0"), "EUR"),
+            debit(SalesRevenue, new BigDecimal("10.0"), "EUR"),
+        ))
+
+        then:
+        updatedEntry.isComplete()
+    }
+
+    def "complete entries with can posted"() {
         given:
         def entry = JournalEntry
             .builder()
@@ -107,7 +107,7 @@ class JournalEntryTests extends Specification {
         updatedEntry.isPosted()
     }
 
-    def "fails to post an entry with has not been marked as complete"() {
+    def "fails to post an incomplete entry"() {
         given:
         def entry = JournalEntry
             .builder()
@@ -120,7 +120,7 @@ class JournalEntryTests extends Specification {
         entry.postToLedger(anyLedger)
 
         then:
-        thrown(JournalEntryIncomplete)
+        thrown(JournalEntryNotReadyForPosting)
     }
 
     def "fails to post an entry that has been already marked as posted"() {
@@ -144,7 +144,7 @@ class JournalEntryTests extends Specification {
         thrown(JournalEntryAlreadyPosted)
     }
 
-    def "cannot assign a posting date unless the entry is considered posted"() {
+    def "cannot create an invalid posted entry"() {
         when:
         JournalEntry
             .builder()
@@ -159,6 +159,6 @@ class JournalEntryTests extends Specification {
             .build()
 
         then:
-        thrown(JournalEntryIncomplete)
+        thrown(JournalEntryNotReadyForPosting)
     }
 }
