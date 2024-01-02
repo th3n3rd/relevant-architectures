@@ -10,6 +10,14 @@ public record FinancialAccount(String name, Type type) {
         Expense
     }
 
+    boolean isAsset() {
+        return Type.Asset.equals(type);
+    }
+
+    boolean isExpense() {
+        return Type.Expense.equals(type);
+    }
+
     static FinancialAccount asset(String name) {
         return new FinancialAccount(name, Type.Asset);
     }

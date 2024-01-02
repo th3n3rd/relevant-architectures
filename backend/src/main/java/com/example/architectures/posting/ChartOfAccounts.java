@@ -13,9 +13,9 @@ import org.springframework.stereotype.Repository;
 @Repository
 class ChartOfAccounts {
     public static final FinancialAccount Cash = asset("cash");
-    public static final FinancialAccount AccountReceivable = asset("account-receivable");
+    public static final FinancialAccount AccountsReceivable = asset("accounts-receivable");
     public static final FinancialAccount Inventory = asset("inventory");
-    public static final FinancialAccount AccountPayable = liability("account-payable");
+    public static final FinancialAccount AccountsPayable = liability("accounts-payable");
     public static final FinancialAccount LoansPayable = liability("loans-payable");
     public static final FinancialAccount OwnerCapital = equity("owner-capital");
     public static final FinancialAccount RetainedEarnings = equity("retained-earnings");
@@ -27,9 +27,9 @@ class ChartOfAccounts {
 
     private static final List<FinancialAccount> Standard = List.of(
         // Assets
-        Cash, AccountReceivable, Inventory,
+        Cash, AccountsReceivable, Inventory,
         // Liabilities
-        AccountPayable, LoansPayable,
+        AccountsPayable, LoansPayable,
         // Equities
         OwnerCapital, RetainedEarnings,
         // Revenues

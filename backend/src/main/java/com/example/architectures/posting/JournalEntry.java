@@ -9,11 +9,13 @@ import java.util.Objects;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.ToString;
 import lombok.experimental.Accessors;
 
 @Accessors(fluent = true)
 @Getter
 @EqualsAndHashCode(of = "id")
+@ToString
 final class JournalEntry {
     private final JournalEntryId id;
     private final ClientId clientId;
@@ -72,7 +74,13 @@ final class JournalEntry {
         if (isPosted()) {
             throw new JournalEntryAlreadyPosted();
         }
-        lines.forEach(it -> ledger.updateAccount(it.account, it.amount));
+        lines.forEach(it -> {
+            if (it.isDebit()) {
+                ledger.debit(it.account, it.amount);
+            } else {
+                ledger.credit(it.account, it.amount);
+            }
+        });
         return toBuilder()
             .postedAt(LocalDateTime.now())
             .build();

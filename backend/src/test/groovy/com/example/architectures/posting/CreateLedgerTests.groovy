@@ -36,9 +36,9 @@ class CreateLedgerTests extends Specification {
             ]
         } == [
             [name: "cash", type: "Asset", balance: "0.0"],
-            [name: "account-receivable", type: "Asset", balance: "0.0"],
+            [name: "accounts-receivable", type: "Asset", balance: "0.0"],
             [name: "inventory", type: "Asset", balance: "0.0"],
-            [name: "account-payable", type: "Liability", balance: "0.0"],
+            [name: "accounts-payable", type: "Liability", balance: "0.0"],
             [name: "loans-payable", type: "Liability", balance: "0.0"],
             [name: "owner-capital", type: "Equity", balance: "0.0"],
             [name: "retained-earnings", type: "Equity", balance: "0.0"],

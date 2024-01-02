@@ -11,7 +11,7 @@ import org.springframework.test.web.servlet.MockMvc
 import spock.lang.Specification
 
 import static com.example.architectures.auth.Auth.authenticatedConsultant
-import static com.example.architectures.posting.ChartOfAccounts.AccountReceivable
+import static com.example.architectures.posting.ChartOfAccounts.AccountsReceivable
 import static com.example.architectures.posting.ChartOfAccounts.Cash
 import static com.example.architectures.posting.ChartOfAccounts.SalesRevenue
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
@@ -48,7 +48,7 @@ class GetLedgerDetailsApiTests extends Specification {
         authorisations.authorise(anyConsultantId, anyClientId)
         ledgers.save(new Ledger(anyClientId, List.of(
             new LedgerAccount(Cash, new BigDecimal("100.0")),
-            new LedgerAccount(AccountReceivable, new BigDecimal("50.0")),
+            new LedgerAccount(AccountsReceivable, new BigDecimal("50.0")),
             new LedgerAccount(SalesRevenue, new BigDecimal("150.0"))
         )))
 
@@ -64,7 +64,7 @@ class GetLedgerDetailsApiTests extends Specification {
         {
             "accounts": [
                 { name: "cash", balance: 100.0 },
-                { name: "account-receivable", balance: 50.0 },
+                { name: "accounts-receivable", balance: 50.0 },
                 { name: "sales-revenue", balance: 150.0 }
             ] 
         }

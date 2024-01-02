@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import spock.lang.Specification
 
-import static com.example.architectures.posting.ChartOfAccounts.AccountReceivable
+import static com.example.architectures.posting.ChartOfAccounts.AccountsReceivable
 import static com.example.architectures.posting.ChartOfAccounts.Cash
 import static com.example.architectures.posting.ChartOfAccounts.SalesRevenue
 import static com.example.architectures.posting.JournalEntry.Line.credit
@@ -32,7 +32,7 @@ class AutomatedPostingTaskTests extends Specification {
         given:
         ledgers.save(new Ledger(anyClientId, List.of(
             new LedgerAccount(Cash, new BigDecimal("100.0")),
-            new LedgerAccount(AccountReceivable, new BigDecimal("50.0")),
+            new LedgerAccount(AccountsReceivable, new BigDecimal("50.0")),
             new LedgerAccount(SalesRevenue, new BigDecimal("150.0"))
         )))
         def entry = JournalEntry.fromEcommerce(anyAccountId)
@@ -55,7 +55,7 @@ class AutomatedPostingTaskTests extends Specification {
         updatedEntry.isPosted()
         updatedLedger.accounts() == [
             new LedgerAccount(Cash, new BigDecimal("175.0")),
-            new LedgerAccount(AccountReceivable, new BigDecimal("50.0")),
+            new LedgerAccount(AccountsReceivable, new BigDecimal("50.0")),
             new LedgerAccount(SalesRevenue, new BigDecimal("225.0"))
         ]
     }
