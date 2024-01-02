@@ -10,7 +10,7 @@ import org.jmolecules.ddd.annotation.ValueObject;
 @ValueObject
 @Accessors(fluent = true)
 @Getter
-@EqualsAndHashCode(of = {"account", "balance"})
+@EqualsAndHashCode
 @ToString
 public final class LedgerAccount {
     private final FinancialAccount account;
