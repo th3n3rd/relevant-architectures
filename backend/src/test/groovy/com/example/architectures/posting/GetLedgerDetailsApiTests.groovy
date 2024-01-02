@@ -11,8 +11,9 @@ import org.springframework.test.web.servlet.MockMvc
 import spock.lang.Specification
 
 import static com.example.architectures.auth.Auth.authenticatedConsultant
-import static com.example.architectures.posting.FinancialAccount.asset
-import static com.example.architectures.posting.FinancialAccount.revenue
+import static com.example.architectures.posting.ChartOfAccounts.AccountReceivable
+import static com.example.architectures.posting.ChartOfAccounts.Cash
+import static com.example.architectures.posting.ChartOfAccounts.SalesRevenue
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
@@ -46,9 +47,9 @@ class GetLedgerDetailsApiTests extends Specification {
         given:
         authorisations.authorise(anyConsultantId, anyClientId)
         ledgers.save(new Ledger(anyClientId, List.of(
-            new LedgerAccount(asset("cash"), new BigDecimal("100.0")),
-            new LedgerAccount(asset("account-receivable"), new BigDecimal("50.0")),
-            new LedgerAccount(revenue("sales-revenue"), new BigDecimal("150.0"))
+            new LedgerAccount(Cash, new BigDecimal("100.0")),
+            new LedgerAccount(AccountReceivable, new BigDecimal("50.0")),
+            new LedgerAccount(SalesRevenue, new BigDecimal("150.0"))
         )))
 
         when:

@@ -5,8 +5,8 @@ import spock.lang.Specification
 
 import java.time.LocalDateTime
 
-import static com.example.architectures.posting.FinancialAccount.asset
-import static com.example.architectures.posting.FinancialAccount.revenue
+import static com.example.architectures.posting.ChartOfAccounts.Cash
+import static com.example.architectures.posting.ChartOfAccounts.SalesRevenue
 import static com.example.architectures.posting.JournalEntry.Line.credit
 import static com.example.architectures.posting.JournalEntry.Line.debit
 
@@ -14,8 +14,8 @@ class JournalEntryTests extends Specification {
 
     private static ClientId anyClientId = new ClientId(456)
     private static Ledger anyLedger = new Ledger(anyClientId, List.of(
-        new LedgerAccount(asset("cash")),
-        new LedgerAccount(revenue("sales-revenue")),
+        new LedgerAccount(Cash),
+        new LedgerAccount(SalesRevenue),
     ))
 
     def "two entries with the same identifier, but different values, are considered equal"() {
@@ -47,8 +47,8 @@ class JournalEntryTests extends Specification {
 
         when:
         def updatedEntry = entry.withLines(List.of(
-            credit(asset("cash"), new BigDecimal("10.0"), "EUR"),
-            debit(revenue("sales-revenue"), new BigDecimal("10.0"), "EUR"),
+            credit(Cash, new BigDecimal("10.0"), "EUR"),
+            debit(SalesRevenue, new BigDecimal("10.0"), "EUR"),
         ))
 
         then:
@@ -79,8 +79,8 @@ class JournalEntryTests extends Specification {
 
         when:
         def updatedEntry = entry.withLines(List.of(
-            credit(asset("cash"), new BigDecimal("100.0"), "GBP"),
-            debit(revenue("sales-revenue"), new BigDecimal("100.0"), "GBP"),
+            credit(Cash, new BigDecimal("100.0"), "GBP"),
+            debit(SalesRevenue, new BigDecimal("100.0"), "GBP"),
         ))
 
         then:
@@ -95,8 +95,8 @@ class JournalEntryTests extends Specification {
             .amount(new BigDecimal("80.0"))
             .currency("GBP")
             .lines(List.of(
-                credit(asset("cash"), new BigDecimal("80.0"), "GBP"),
-                debit(revenue("sales-revenue"), new BigDecimal("80.0"), "GBP"),
+                credit(Cash, new BigDecimal("80.0"), "GBP"),
+                debit(SalesRevenue, new BigDecimal("80.0"), "GBP"),
             ))
             .build()
 
@@ -131,8 +131,8 @@ class JournalEntryTests extends Specification {
             .amount(new BigDecimal("80.0"))
             .currency("GBP")
             .lines(List.of(
-                credit(asset("cash"), new BigDecimal("80.0"), "GBP"),
-                debit(revenue("sales-revenue"), new BigDecimal("80.0"), "GBP"),
+                credit(Cash, new BigDecimal("80.0"), "GBP"),
+                debit(SalesRevenue, new BigDecimal("80.0"), "GBP"),
             ))
             .postedAt(LocalDateTime.now())
             .build()
@@ -152,8 +152,8 @@ class JournalEntryTests extends Specification {
             .amount(new BigDecimal("80.0"))
             .currency("GBP")
             .lines(List.of(
-                credit(asset("cash"), new BigDecimal("50.0"), "GBP"),
-                debit(revenue("sales-revenue"), new BigDecimal("50.0"), "GBP"),
+                credit(Cash, new BigDecimal("50.0"), "GBP"),
+                debit(SalesRevenue, new BigDecimal("50.0"), "GBP"),
             ))
             .postedAt(LocalDateTime.now())
             .build()

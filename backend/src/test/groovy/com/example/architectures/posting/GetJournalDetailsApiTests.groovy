@@ -12,8 +12,8 @@ import org.springframework.test.web.servlet.MockMvc
 import spock.lang.Specification
 
 import static com.example.architectures.auth.Auth.authenticatedConsultant
-import static com.example.architectures.posting.FinancialAccount.asset
-import static com.example.architectures.posting.FinancialAccount.revenue
+import static com.example.architectures.posting.ChartOfAccounts.Cash
+import static com.example.architectures.posting.ChartOfAccounts.SalesRevenue
 import static com.example.architectures.posting.JournalEntry.Line.credit
 import static com.example.architectures.posting.JournalEntry.Line.debit
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
@@ -69,8 +69,8 @@ class GetJournalDetailsApiTests extends Specification {
                 .currency("EUR")
                 .build()
                 .withLines(List.of(
-                    debit(asset("cash"), new BigDecimal("30.0"), "EUR"),
-                    credit(revenue("sales-revenue"), new BigDecimal("30.0"), "EUR"),
+                    debit(Cash, new BigDecimal("30.0"), "EUR"),
+                    credit(SalesRevenue, new BigDecimal("30.0"), "EUR"),
                 )),
             JournalEntry.fromEcommerce(klarna)
                 .clientId(anotherClientId)

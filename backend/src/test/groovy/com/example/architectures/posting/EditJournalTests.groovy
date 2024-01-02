@@ -5,8 +5,8 @@ import com.example.architectures.common.InMemoryEventPublisher
 import com.example.architectures.ecommerce.AccountId
 import spock.lang.Specification
 
-import static com.example.architectures.posting.FinancialAccount.asset
-import static com.example.architectures.posting.FinancialAccount.revenue
+import static com.example.architectures.posting.ChartOfAccounts.Cash
+import static com.example.architectures.posting.ChartOfAccounts.SalesRevenue
 import static com.example.architectures.posting.JournalEntry.Line.credit
 import static com.example.architectures.posting.JournalEntry.Line.debit
 
@@ -30,15 +30,15 @@ class EditJournalTests extends Specification {
 
         when:
         editJournal.handle(entry.id(), List.of(
-            debit(asset("cost"), new BigDecimal("100.0"), "EUR"),
-            credit(revenue("sales-revenue"), new BigDecimal("100.0"), "EUR"),
+            debit(Cash, new BigDecimal("100.0"), "EUR"),
+            credit(SalesRevenue, new BigDecimal("100.0"), "EUR"),
         ))
 
         then:
         def updatedEntry = journal.findById(entry.id()).orElseThrow()
         updatedEntry.lines() == [
-            debit(asset("cost"), new BigDecimal("100.0"), "EUR"),
-            credit(revenue("sales-revenue"), new BigDecimal("100.0"), "EUR"),
+            debit(Cash, new BigDecimal("100.0"), "EUR"),
+            credit(SalesRevenue, new BigDecimal("100.0"), "EUR"),
         ]
     }
 
@@ -53,8 +53,8 @@ class EditJournalTests extends Specification {
 
         when:
         editJournal.handle(entry.id(), List.of(
-            debit(asset("cost"), new BigDecimal("35.0"), "GBP"),
-            credit(revenue("sales-revenue"), new BigDecimal("35.0"), "GBP"),
+            debit(Cash, new BigDecimal("35.0"), "GBP"),
+            credit(SalesRevenue, new BigDecimal("35.0"), "GBP"),
         ))
 
         then:
@@ -74,8 +74,8 @@ class EditJournalTests extends Specification {
 
         when:
         editJournal.handle(entry.id(), List.of(
-            debit(asset("cost"), new BigDecimal("25.0"), "EUR"),
-            credit(revenue("sales-revenue"), new BigDecimal("20.0"), "EUR"),
+            debit(Cash, new BigDecimal("25.0"), "EUR"),
+            credit(SalesRevenue, new BigDecimal("20.0"), "EUR"),
         ))
 
         then:

@@ -1,24 +1,41 @@
 package com.example.architectures.posting;
 
+import static com.example.architectures.posting.FinancialAccount.asset;
+import static com.example.architectures.posting.FinancialAccount.equity;
+import static com.example.architectures.posting.FinancialAccount.expense;
+import static com.example.architectures.posting.FinancialAccount.liability;
+import static com.example.architectures.posting.FinancialAccount.revenue;
+
 import java.util.List;
 import java.util.Optional;
 import org.springframework.stereotype.Repository;
 
 @Repository
 class ChartOfAccounts {
+    public static final FinancialAccount Cash = asset("cash");
+    public static final FinancialAccount AccountReceivable = asset("account-receivable");
+    public static final FinancialAccount Inventory = asset("inventory");
+    public static final FinancialAccount AccountPayable = liability("account-payable");
+    public static final FinancialAccount LoansPayable = liability("loans-payable");
+    public static final FinancialAccount OwnerCapital = equity("owner-capital");
+    public static final FinancialAccount RetainedEarnings = equity("retained-earnings");
+    public static final FinancialAccount SalesRevenue = revenue("sales-revenue");
+    public static final FinancialAccount ServiceRevenue = revenue("service-revenue");
+    public static final FinancialAccount RentExpense = expense("rent-expense");
+    public static final FinancialAccount SalaryExpense = expense("salary-expense");
+    public static final FinancialAccount UtilitiesExpense = expense("utilities-expense");
+
     private static final List<FinancialAccount> Standard = List.of(
-        FinancialAccount.asset("cash"),
-        FinancialAccount.asset("account-receivable"),
-        FinancialAccount.asset("inventory"),
-        FinancialAccount.liability("account-payable"),
-        FinancialAccount.liability("loans-payable"),
-        FinancialAccount.equity("owner-capital"),
-        FinancialAccount.equity("retained-earnings"),
-        FinancialAccount.revenue("sales-revenue"),
-        FinancialAccount.revenue("service-revenue"),
-        FinancialAccount.expense("rent-expense"),
-        FinancialAccount.expense("salary-expense"),
-        FinancialAccount.expense("utilities-expense")
+        // Assets
+        Cash, AccountReceivable, Inventory,
+        // Liabilities
+        AccountPayable, LoansPayable,
+        // Equities
+        OwnerCapital, RetainedEarnings,
+        // Revenues
+        SalesRevenue, ServiceRevenue,
+        // Expenses
+        RentExpense, SalaryExpense, UtilitiesExpense
     );
 
     List<FinancialAccount> findAll() {
