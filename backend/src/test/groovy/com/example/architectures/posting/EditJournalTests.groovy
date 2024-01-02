@@ -1,6 +1,7 @@
 package com.example.architectures.posting
 
 import com.example.architectures.common.ClientId
+import com.example.architectures.common.InMemoryEventPublisher
 import com.example.architectures.ecommerce.AccountId
 import spock.lang.Specification
 
@@ -14,8 +15,9 @@ class EditJournalTests extends Specification {
     private static final anyClientId = new ClientId(123)
     private static final anyAccountId = new AccountId("729")
 
+    def eventPublisher = new InMemoryEventPublisher();
     def journal = new InMemoryJournal()
-    def editJournal = new EditJournal(journal)
+    def editJournal = new EditJournal(journal, eventPublisher)
 
     def "append the given entry lines for an existing entry"() {
         given:
@@ -37,6 +39,27 @@ class EditJournalTests extends Specification {
         updatedEntry.lines() == [
             debit(asset("cost"), new BigDecimal("100.0"), "EUR"),
             credit(revenue("sales-revenue"), new BigDecimal("100.0"), "EUR"),
+        ]
+    }
+
+    def "publish an event when an entry is completed"() {
+        given:
+        def entry = JournalEntry.fromEcommerce(anyAccountId)
+            .clientId(anyClientId)
+            .amount(new BigDecimal("35.0"))
+            .currency("GBP")
+            .build()
+        journal.save(entry)
+
+        when:
+        editJournal.handle(entry.id(), List.of(
+            debit(asset("cost"), new BigDecimal("35.0"), "GBP"),
+            credit(revenue("sales-revenue"), new BigDecimal("35.0"), "GBP"),
+        ))
+
+        then:
+        eventPublisher.publishedEvents() == [
+            new JournalEntryCompleted(entry.id())
         ]
     }
 

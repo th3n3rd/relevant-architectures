@@ -67,18 +67,21 @@ class JourneyTests extends Specification {
             [type: "Debit", accountName: "cash", amount: "10.0", currency: "EUR"],
             [type: "Credit", accountName: "sales-revenue", amount: "10.0", currency: "EUR"]
         ])
-
         consultant.journalContains(clientId, [
             [
                 amount: "10.0",
                 currency: "EUR",
-                status: "Complete",
+                status: "Posted",
                 lines: [
                     [type: "Debit", accountName: "cash", amount: "10.0", currency: "EUR"],
                     [type: "Credit", accountName: "sales-revenue", amount: "10.0", currency: "EUR"]
                 ],
                 metadata: [ origin: "e-commerce", accountId: klarnaAccount.value() ]
             ],
+        ])
+        consultant.ledgerContains(clientId, [
+            [name: "cash", balance: "10.0"],
+            [name: "sales-revenue", balance: "10.0"]
         ])
 
         expect: true

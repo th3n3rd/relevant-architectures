@@ -51,7 +51,9 @@ class TaxConsultant {
                 ]
             ]
         }
-        assert actual.containsAll(expected)
+        expected.forEach {
+            assert actual.contains(it)
+        }
     }
 
     void createLedger(ClientId clientId) {
@@ -76,7 +78,9 @@ class TaxConsultant {
                 balance: it.balance
             ]
         }
-        assert actual.containsAll(expected)
+        expected.forEach {
+            assert actual.contains(it)
+        }
     }
 
     void editJournal(ClientId clientId, int nthEntry, entryLines) {
