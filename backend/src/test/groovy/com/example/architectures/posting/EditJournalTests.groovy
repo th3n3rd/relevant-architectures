@@ -5,6 +5,8 @@ import com.example.architectures.common.InMemoryEventPublisher
 import com.example.architectures.ecommerce.AccountId
 import spock.lang.Specification
 
+import java.time.LocalDateTime
+
 import static com.example.architectures.posting.ChartOfAccounts.Cash
 import static com.example.architectures.posting.ChartOfAccounts.SalesRevenue
 import static com.example.architectures.posting.JournalEntry.Line.credit
@@ -80,5 +82,31 @@ class EditJournalTests extends Specification {
 
         then:
         thrown(JournalEntryUnbalanced)
+    }
+
+    def "fails to update an already posted entry"() {
+        given:
+        def entry = JournalEntry.fromEcommerce(anyAccountId)
+            .clientId(anyClientId)
+            .amount(new BigDecimal("30.0"))
+            .currency("EUR")
+            .lines(List.of(
+                debit(Cash, new BigDecimal("30.0"), "EUR"),
+                credit(SalesRevenue, new BigDecimal("30.0"), "EUR"),
+            ))
+            .postedAt(LocalDateTime.now())
+            .build()
+        journal.save(entry)
+
+        when:
+        editJournal.handle(entry.id(), List.of(
+            debit(Cash, new BigDecimal("15.0"), "EUR"),
+            debit(Cash, new BigDecimal("15.0"), "EUR"),
+            credit(SalesRevenue, new BigDecimal("15.0"), "EUR"),
+            credit(SalesRevenue, new BigDecimal("15.0"), "EUR"),
+        ))
+
+        then:
+        thrown(JournalEntryAlreadyPosted)
     }
 }

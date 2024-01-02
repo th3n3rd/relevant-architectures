@@ -50,6 +50,9 @@ final class JournalEntry {
     }
 
     JournalEntry withLines(List<Line> lines) {
+        if (isPosted()) {
+            throw new JournalEntryAlreadyPosted();
+        }
         return toBuilder().lines(lines).build();
     }
 
