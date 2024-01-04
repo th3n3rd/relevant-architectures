@@ -28,7 +28,7 @@ class AutomatedPostingTaskTests extends Specification {
     @Autowired
     private InMemoryLedgers ledgers
 
-    def "post a journal entry that has been marked as completed"() {
+    def "post journal entries that have been marked as completed"() {
         given:
         ledgers.save(new Ledger(anyClientId, List.of(
             new LedgerAccount(Cash, new BigDecimal("100.0")),
