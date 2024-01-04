@@ -1,6 +1,7 @@
 package com.example.architectures.posting
 
 import com.example.architectures.common.ClientId
+import com.example.architectures.posting.infra.InMemoryLedgers
 import spock.lang.Specification
 
 class CreateLedgerTests extends Specification {

@@ -3,6 +3,7 @@ package com.example.architectures.posting
 import com.example.architectures.common.ClientId
 import com.example.architectures.common.InMemoryEventPublisher
 import com.example.architectures.ecommerce.AccountId
+import com.example.architectures.posting.infra.InMemoryJournal
 import spock.lang.Specification
 
 import java.time.LocalDateTime

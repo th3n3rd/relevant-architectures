@@ -1,6 +1,8 @@
-package com.example.architectures.posting;
+package com.example.architectures.posting.infra;
 
 import com.example.architectures.common.ClientId;
+import com.example.architectures.posting.Ledger;
+import com.example.architectures.posting.Ledgers;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;

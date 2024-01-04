@@ -16,7 +16,7 @@ import lombok.experimental.Accessors;
 @Getter
 @EqualsAndHashCode(of = "id")
 @ToString
-final class JournalEntry {
+public final class JournalEntry {
     private final JournalEntryId id;
     private final ClientId clientId;
     private final BigDecimal amount;
@@ -111,14 +111,14 @@ final class JournalEntry {
             .metadata(new Metadata("e-commerce", accountId));
     }
 
-    enum Status {
+    public enum Status {
         Incomplete,
         Complete,
         Posted
     }
 
-    record Line(FinancialAccount account, BigDecimal amount, String currency, Type type) {
-        enum Type { Debit, Credit;}
+    public record Line(FinancialAccount account, BigDecimal amount, String currency, Type type) {
+        public enum Type { Debit, Credit;}
 
         boolean isDebit() {
             return Type.Debit.equals(type);
@@ -133,7 +133,7 @@ final class JournalEntry {
         }
     }
 
-    record Metadata(String origin, AccountId accountId) {}
+    public record Metadata(String origin, AccountId accountId) {}
 
     record Balance(BigDecimal value) {
         static Balance of(List<Line> lines) {

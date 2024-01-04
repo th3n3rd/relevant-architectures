@@ -6,7 +6,7 @@ import com.example.architectures.ecommerce.PaymentGateway;
 import org.springframework.stereotype.Component;
 
 @Component
-class RecordEcommerceTransactions {
+public class RecordEcommerceTransactions {
 
     private final PaymentGateway paymentGateway;
     private final Journal journal;
@@ -16,7 +16,7 @@ class RecordEcommerceTransactions {
         this.journal = journal;
     }
 
-    void handle(ClientId clientId, AccountId accountId) {
+    public void handle(ClientId clientId, AccountId accountId) {
         var newEntries = paymentGateway.fetchTransactions(clientId, accountId)
             .stream()
             .map(it -> JournalEntry

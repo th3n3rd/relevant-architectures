@@ -4,6 +4,7 @@ import com.example.architectures.common.ClientId
 import com.example.architectures.ecommerce.AccountId
 import com.example.architectures.ecommerce.PaymentGateway
 import com.example.architectures.ecommerce.Transaction
+import com.example.architectures.posting.infra.InMemoryJournal
 import spock.lang.Specification
 
 class RecordEcommerceTransactionsTests extends Specification {

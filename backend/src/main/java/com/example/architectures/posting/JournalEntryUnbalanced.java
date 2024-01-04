@@ -1,3 +1,3 @@
 package com.example.architectures.posting;
 
-class JournalEntryUnbalanced extends RuntimeException {}
+public class JournalEntryUnbalanced extends RuntimeException {}

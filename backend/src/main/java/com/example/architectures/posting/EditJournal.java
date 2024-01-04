@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Component;
 
 @Component
-class EditJournal {
+public class EditJournal {
 
     private final Journal journal;
     private final EventPublisher eventPublisher;
@@ -15,7 +15,7 @@ class EditJournal {
         this.eventPublisher = eventPublisher;
     }
 
-    void handle(JournalEntryId entryId, List<JournalEntry.Line> entryLines) {
+    public void handle(JournalEntryId entryId, List<JournalEntry.Line> entryLines) {
         var entry = journal.findById(entryId).orElseThrow();
         var updatedEntry = entry.withLines(entryLines);
         journal.save(updatedEntry);

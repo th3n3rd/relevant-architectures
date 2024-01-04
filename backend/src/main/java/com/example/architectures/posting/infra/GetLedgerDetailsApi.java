@@ -1,7 +1,8 @@
-package com.example.architectures.posting;
+package com.example.architectures.posting.infra;
 
 import com.example.architectures.auth.ConsultantAuthorised;
 import com.example.architectures.common.ClientId;
+import com.example.architectures.posting.Ledgers;
 import java.math.BigDecimal;
 import java.util.List;
 import org.springframework.web.bind.annotation.GetMapping;

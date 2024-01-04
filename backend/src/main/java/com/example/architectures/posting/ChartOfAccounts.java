@@ -11,7 +11,7 @@ import java.util.Optional;
 import org.springframework.stereotype.Repository;
 
 @Repository
-class ChartOfAccounts {
+public class ChartOfAccounts {
     public static final FinancialAccount Cash = asset("cash");
     public static final FinancialAccount AccountsReceivable = asset("accounts-receivable");
     public static final FinancialAccount Inventory = asset("inventory");

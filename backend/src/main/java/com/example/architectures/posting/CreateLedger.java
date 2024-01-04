@@ -4,7 +4,7 @@ import com.example.architectures.common.ClientId;
 import org.springframework.stereotype.Component;
 
 @Component
-class CreateLedger {
+public class CreateLedger {
     private final Ledgers ledgers;
     private final ChartOfAccounts chartOfAccounts;
 
@@ -13,7 +13,7 @@ class CreateLedger {
         this.chartOfAccounts = chartOfAccounts;
     }
 
-    void handle(ClientId clientId) {
+    public void handle(ClientId clientId) {
         ledgers.save(new Ledger(
             clientId,
             chartOfAccounts.findAll()

@@ -1,4 +1,4 @@
-package com.example.architectures.posting
+package com.example.architectures.posting.infra
 
 import com.example.architectures.common.ClientId
 import com.example.architectures.common.EventPublisher

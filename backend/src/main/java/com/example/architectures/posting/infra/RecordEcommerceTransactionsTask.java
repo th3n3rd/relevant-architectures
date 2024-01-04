@@ -1,6 +1,7 @@
-package com.example.architectures.posting;
+package com.example.architectures.posting.infra;
 
 import com.example.architectures.ecommerce.NewAccountSetup;
+import com.example.architectures.posting.RecordEcommerceTransactions;
 import org.jmolecules.event.annotation.DomainEventHandler;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;

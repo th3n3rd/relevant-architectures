@@ -1,8 +1,10 @@
-package com.example.architectures.posting;
+package com.example.architectures.posting.infra;
 
 import com.example.architectures.auth.ConsultantAuthorised;
 import com.example.architectures.common.ClientId;
 import com.example.architectures.ecommerce.AccountId;
+import com.example.architectures.posting.JournalEntry;
+import com.example.architectures.posting.JournalEntryId;
 import java.util.List;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.GetMapping;

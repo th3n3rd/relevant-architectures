@@ -1,8 +1,12 @@
-package com.example.architectures.posting
+package com.example.architectures.posting.infra
 
 import com.example.architectures.common.ClientId
 import com.example.architectures.common.EventPublisher
 import com.example.architectures.ecommerce.AccountId
+import com.example.architectures.posting.JournalEntry
+import com.example.architectures.posting.JournalEntryCompleted
+import com.example.architectures.posting.Ledger
+import com.example.architectures.posting.LedgerAccount
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import spock.lang.Specification

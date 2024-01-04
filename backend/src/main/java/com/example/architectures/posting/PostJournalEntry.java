@@ -3,7 +3,7 @@ package com.example.architectures.posting;
 import org.springframework.stereotype.Component;
 
 @Component
-class PostJournalEntry {
+public class PostJournalEntry {
 
     private final Journal journal;
     private final Ledgers ledgers;
@@ -13,7 +13,7 @@ class PostJournalEntry {
         this.ledgers = ledgers;
     }
 
-    void handle(JournalEntryId entryId) {
+    public void handle(JournalEntryId entryId) {
         var entry = journal.findById(entryId).orElseThrow();
         var ledger = ledgers.findByClientId(entry.clientId()).orElseThrow();
         var postedEntry = entry.postToLedger(ledger);
