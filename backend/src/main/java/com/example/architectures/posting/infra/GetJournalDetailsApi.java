@@ -1,6 +1,6 @@
 package com.example.architectures.posting.infra;
 
-import com.example.architectures.auth.ConsultantAuthorised;
+import com.example.architectures.auth.CheckConsultantAuthorisation;
 import com.example.architectures.common.ClientId;
 import com.example.architectures.ecommerce.AccountId;
 import com.example.architectures.posting.JournalEntry;
@@ -20,7 +20,7 @@ class GetJournalDetailsApi {
         this.journal = journal;
     }
 
-    @ConsultantAuthorised
+    @CheckConsultantAuthorisation
     @GetMapping("/clients/{clientId}/journal")
     Response.Journal handle(
         @PathVariable ClientId clientId,

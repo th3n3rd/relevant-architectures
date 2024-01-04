@@ -1,6 +1,6 @@
 package com.example.architectures.ecommerce.infra;
 
-import com.example.architectures.auth.ConsultantAuthorised;
+import com.example.architectures.auth.CheckConsultantAuthorisation;
 import com.example.architectures.common.ClientId;
 import com.example.architectures.ecommerce.AccountId;
 import com.example.architectures.ecommerce.SetupAccount;
@@ -20,7 +20,7 @@ class SetupAccountApi {
         this.setupAccount = setupAccount;
     }
 
-    @ConsultantAuthorised
+    @CheckConsultantAuthorisation
     @PostMapping("/clients/{clientId}/accounts")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     void handle(@PathVariable ClientId clientId, @RequestBody Request.Account account) {

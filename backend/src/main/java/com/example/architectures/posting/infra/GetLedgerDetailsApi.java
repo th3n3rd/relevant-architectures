@@ -1,6 +1,6 @@
 package com.example.architectures.posting.infra;
 
-import com.example.architectures.auth.ConsultantAuthorised;
+import com.example.architectures.auth.CheckConsultantAuthorisation;
 import com.example.architectures.common.ClientId;
 import com.example.architectures.posting.Ledgers;
 import java.math.BigDecimal;
@@ -18,7 +18,7 @@ class GetLedgerDetailsApi {
         this.ledgers = ledgers;
     }
 
-    @ConsultantAuthorised
+    @CheckConsultantAuthorisation
     @GetMapping("/clients/{clientId}/ledger")
     Response.Ledger handle(@PathVariable ClientId clientId) {
         return ledgers.findByClientId(clientId)

@@ -1,7 +1,7 @@
 package com.example.architectures
 
-import com.example.architectures.auth.AuthServer
-import com.example.architectures.auth.InMemoryAuthorisations
+import com.example.architectures.auth.infra.AuthServer
+import com.example.architectures.auth.infra.InMemoryAuthorisations
 import com.example.architectures.common.ClientId
 import com.example.architectures.common.ConsultantId
 import com.example.architectures.ecommerce.AccountId

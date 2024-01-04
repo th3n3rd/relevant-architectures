@@ -1,4 +1,4 @@
-package com.example.architectures.auth;
+package com.example.architectures.auth.infra;
 
 import static org.springframework.security.core.authority.AuthorityUtils.NO_AUTHORITIES;
 

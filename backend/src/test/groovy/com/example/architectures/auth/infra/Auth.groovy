@@ -1,4 +1,4 @@
-package com.example.architectures.auth
+package com.example.architectures.auth.infra
 
 import com.example.architectures.common.ConsultantId
 import com.nimbusds.jose.JWSAlgorithm

@@ -1,6 +1,6 @@
 package com.example.architectures.posting.infra;
 
-import com.example.architectures.auth.ConsultantAuthorised;
+import com.example.architectures.auth.CheckConsultantAuthorisation;
 import com.example.architectures.common.ClientId;
 import com.example.architectures.posting.CreateLedger;
 import org.springframework.http.HttpStatus;
@@ -18,7 +18,7 @@ class CreateLedgerApi {
         this.createLedger = createLedger;
     }
 
-    @ConsultantAuthorised
+    @CheckConsultantAuthorisation
     @PostMapping("/clients/{clientId}/ledger")
     @ResponseStatus(HttpStatus.CREATED)
     void handle(@PathVariable ClientId clientId) {

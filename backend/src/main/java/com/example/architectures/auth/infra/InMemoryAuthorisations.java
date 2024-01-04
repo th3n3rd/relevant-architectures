@@ -1,5 +1,7 @@
-package com.example.architectures.auth;
+package com.example.architectures.auth.infra;
 
+import com.example.architectures.auth.Authorisation;
+import com.example.architectures.auth.Authorisations;
 import com.example.architectures.common.ClientId;
 import com.example.architectures.common.ConsultantId;
 import java.util.ArrayList;

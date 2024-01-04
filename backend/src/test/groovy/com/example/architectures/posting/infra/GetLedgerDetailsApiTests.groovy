@@ -1,7 +1,7 @@
 package com.example.architectures.posting.infra
 
-import com.example.architectures.auth.InMemoryAuthorisations
-import com.example.architectures.auth.WebSecurityConfig
+import com.example.architectures.auth.infra.InMemoryAuthorisations
+import com.example.architectures.auth.infra.WebSecurityConfig
 import com.example.architectures.common.ClientId
 import com.example.architectures.common.ConsultantId
 import com.example.architectures.posting.Ledger
@@ -12,7 +12,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.test.web.servlet.MockMvc
 import spock.lang.Specification
 
-import static com.example.architectures.auth.Auth.authenticatedConsultant
+import static com.example.architectures.auth.infra.Auth.authenticatedConsultant
 import static com.example.architectures.posting.ChartOfAccounts.AccountsReceivable
 import static com.example.architectures.posting.ChartOfAccounts.Cash
 import static com.example.architectures.posting.ChartOfAccounts.SalesRevenue

@@ -1,6 +1,6 @@
 package com.example.architectures.posting.infra;
 
-import com.example.architectures.auth.ConsultantAuthorised;
+import com.example.architectures.auth.CheckConsultantAuthorisation;
 import com.example.architectures.common.ClientId;
 import com.example.architectures.posting.ChartOfAccounts;
 import com.example.architectures.posting.EditJournal;
@@ -28,7 +28,7 @@ class EditJournalApi {
         this.editJournal = editJournal;
     }
 
-    @ConsultantAuthorised
+    @CheckConsultantAuthorisation
     @PatchMapping("/clients/{clientId}/journal/{entryId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     void handle(@PathVariable ClientId clientId, @PathVariable JournalEntryId entryId, @RequestBody Request.Entry entry) {
