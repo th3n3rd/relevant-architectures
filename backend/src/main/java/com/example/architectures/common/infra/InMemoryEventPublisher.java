@@ -1,5 +1,6 @@
-package com.example.architectures.common;
+package com.example.architectures.common.infra;
 
+import com.example.architectures.common.EventPublisher;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;

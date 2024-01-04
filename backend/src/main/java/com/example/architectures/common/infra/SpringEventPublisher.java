@@ -1,5 +1,6 @@
-package com.example.architectures.common;
+package com.example.architectures.common.infra;
 
+import com.example.architectures.common.EventPublisher;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;

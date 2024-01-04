@@ -4,7 +4,7 @@ import com.example.architectures.auth.InMemoryAuthorisations
 import com.example.architectures.auth.WebSecurityConfig
 import com.example.architectures.common.ClientId
 import com.example.architectures.common.ConsultantId
-import com.example.architectures.common.InMemoryEventPublisher
+import com.example.architectures.common.infra.InMemoryEventPublisher
 import com.example.architectures.ecommerce.AccountId
 import com.example.architectures.posting.ChartOfAccounts
 import com.example.architectures.posting.EditJournal
