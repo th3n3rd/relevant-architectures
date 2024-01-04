@@ -6,7 +6,7 @@ import org.jmolecules.event.annotation.DomainEventPublisher;
 import org.springframework.stereotype.Component;
 
 @Component
-class SetupAccount {
+public class SetupAccount {
 
     private final EventPublisher eventPublisher;
 
@@ -15,7 +15,7 @@ class SetupAccount {
     }
 
     @DomainEventPublisher
-    void handle(ClientId clientId, AccountId accountId) {
+    public void handle(ClientId clientId, AccountId accountId) {
         eventPublisher.publish(new NewAccountSetup(clientId, accountId));
     }
 }

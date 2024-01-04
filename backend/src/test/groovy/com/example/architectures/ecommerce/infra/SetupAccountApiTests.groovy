@@ -1,10 +1,13 @@
-package com.example.architectures.ecommerce
+package com.example.architectures.ecommerce.infra
 
 import com.example.architectures.auth.InMemoryAuthorisations
 import com.example.architectures.auth.WebSecurityConfig
 import com.example.architectures.common.ClientId
 import com.example.architectures.common.ConsultantId
 import com.example.architectures.common.infra.InMemoryEventPublisher
+import com.example.architectures.ecommerce.AccountId
+import com.example.architectures.ecommerce.NewAccountSetup
+import com.example.architectures.ecommerce.SetupAccount
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.json.AutoConfigureJson
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest

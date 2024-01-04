@@ -1,4 +1,4 @@
-package com.example.architectures.ecommerce.klarna;
+package com.example.architectures.ecommerce.infra.klarna;
 
 import com.example.architectures.common.ClientId;
 import com.example.architectures.ecommerce.AccountId;
